@@ -3,14 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import Main from './components/MainComponent';
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View style={styles.backgroundColor}>
       <Main />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundColor: {
     flex: 1,
     backgroundColor: '#00A6FF'
   }
