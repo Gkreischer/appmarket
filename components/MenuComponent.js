@@ -4,6 +4,7 @@ import { Tile } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import CategorySelected from './CategorySelectedComponent';
 
 class Menu extends Component {
     constructor(props) {
@@ -17,6 +18,10 @@ class Menu extends Component {
         this.loadCategorys = this.loadCategorys.bind(this);
         this.removeDuplicates = this.removeDuplicates.bind(this);
     }
+
+    static navigationOptions = {
+        title: 'Menu'
+    };
 
     componentDidMount() {
         this.loadCategorys();
@@ -47,6 +52,8 @@ class Menu extends Component {
     }
 
     render() {
+        const { navigate } = this.props.navigation;
+
         const renderMenuItem = ({ item, index }) => {
 
             return (
@@ -59,22 +66,22 @@ class Menu extends Component {
                     contentContainerStyle={{ height: 140}}
                     imageSrc={{ uri: baseUrl + item.image }}
                     containerStyle={{height: 500}}
+                    onPress={() => navigate('CategorySelected', {category: item.category})}
                 >
                     <View
                         style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
                     >
-                        <Text style={{fontSize: 24, color: '#FFDB45'}}>{item.category.charAt(0).toUpperCase() + item.category.substr(1, item.category.length)}</Text>
+                        <Text style={{fontSize: 24, color: '#ffffff'}}>{item.category.charAt(0).toUpperCase() + item.category.substr(1, item.category.length)}</Text>
                         <Text style={{ paddingTop: 9}}>
-                            <FontAwesomeIcon size={ 24} icon={ faArrowRight } />
+                            <FontAwesomeIcon size={ 24 } icon={ faArrowRight } />
                         </Text>
                     </View>
                 </Tile>
             );
         };
-
+        
         return (
-            <View style={{ marginTop: 50, marginBottom: 140 }}>
-                <Text style={{ textAlign: 'center', fontSize: 24, color: '#FAFAFA', marginBottom: 40 }}>Selecione uma categoria</Text>
+            <View style={{backgroundColor: '#fecd21'}}>
                 <FlatList
                     data={this.state.products}
                     renderItem={renderMenuItem}
