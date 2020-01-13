@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { Card, Badge } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
 
@@ -10,7 +10,8 @@ class ProductDetails extends Component {
         this.state = {
             productIdReceived: null,
             productLoaded: {},
-            error: null
+            error: null,
+
         }
         
         this.loadProductInfo = this.loadProductInfo.bind(this);
@@ -45,23 +46,26 @@ class ProductDetails extends Component {
     render() {
         
         return(
-            <View>
+            <ScrollView>
                 <Card
                     image={{uri: baseUrl + this.state.productLoaded.image}}
                     imageProps={{
                         containerStyle: {height: 400}
                     }}
                 >   
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 40}}>
-                        <Text style={{fontWeight: 'bold'}}>{this.state.productLoaded.name}</Text>
-                        <Text>Preço: R$ {this.state.productLoaded.price}</Text>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 52, marginBottom: 20}}>
+                        <Text style={{fontWeight: 'bold'}}>Nome: {this.state.productLoaded.name}</Text>
+                        <Text style={{fontWeight: 'bold'}}>Preço: R$ {this.state.productLoaded.price}</Text>
                     </View>
-                    <Text style={{marginBottom: 10, textAlign: "center"}}>
-                        {this.state.productLoaded.description}
+                    <Text style={{marginBottom: 15, textAlign: "center"}}>
+                        Descrição: {this.state.productLoaded.description}
+                    </Text>
+                    <Text style={{marginBottom: 15, textAlign: 'center'}}>
+                        Data de cadastro: {new Date(this.state.productLoaded.updatedAt).toLocaleDateString('pt-BR')}
                     </Text>
                     
                 </Card>
-            </View>
+            </ScrollView>
         );
     }
 }
