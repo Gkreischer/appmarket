@@ -17,7 +17,6 @@ class CategorySelected extends Component {
         this.loadProductsOfCategory = this.loadProductsOfCategory.bind(this);
 
     }
-
     static navigationOptions = {
         title: 'Categoria'
     };
@@ -36,10 +35,9 @@ class CategorySelected extends Component {
                     throw new Error('Algo errado aconteceu...');
                 }
             })
-            .then((data) => {
-                this.setState({ productsOfCategory: data });
-                navigationOptions.title = categorySelected;
-            })
+            .then((data) => 
+            this.setState({ productsOfCategory: data })
+            )   
             .catch(errorReceived => this.setState({ error: errorReceived }))
     }
 

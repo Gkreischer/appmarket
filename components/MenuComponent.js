@@ -12,11 +12,12 @@ class Menu extends Component {
 
         this.state = {
             products: [],
-            error: null
+            error: ''
         }
 
         this.loadCategorys = this.loadCategorys.bind(this);
         this.removeDuplicates = this.removeDuplicates.bind(this);
+
     }
 
     static navigationOptions = {
@@ -48,12 +49,13 @@ class Menu extends Component {
                 let arrayWithDuplicateRemoved = this.removeDuplicates(data, 'category');
                 this.setState({ products: arrayWithDuplicateRemoved });
             })
-            .catch(errorReceived => this.setState({ error: errorReceived }))
+            .catch(error => this.setState({ error: error }))
     }
 
     render() {
-        const { navigate } = this.props.navigation;
-
+        if(this.state.products.length != 0){
+            const { navigate } = this.props.navigation;
+        
             const renderMenuItem = ({ item, index }) => {
 
                 return (
@@ -89,6 +91,13 @@ class Menu extends Component {
                     />
                 </View>
             );
+        } else {
+            return(
+                <View style={styles.container}>
+                    <Text>Você ainda não possui produtos cadastrados</Text>
+                </View>
+            );
+        }
     }
 }
 
