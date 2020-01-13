@@ -54,48 +54,53 @@ class Menu extends Component {
     render() {
         const { navigate } = this.props.navigation;
 
-        const renderMenuItem = ({ item, index }) => {
+            const renderMenuItem = ({ item, index }) => {
+
+                return (
+                    <Tile
+                        key={index}
+                        // title={item.category.charAt(0).toUpperCase() + item.category.substr(1, item.category.length)}
+                        // titleStyle={{ color: '#FFDB45' }}
+                        // caption={item.description}
+                        // captionStyle={{ paddingTop: 200, fontSize: 20 }}
+                        contentContainerStyle={{ height: 140 }}
+                        imageSrc={{ uri: baseUrl + item.image }}
+                        containerStyle={{ height: 500 }}
+                        onPress={() => navigate('CategorySelected', { category: item.category })}
+                    >
+                        <View
+                            style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
+                        >
+                            <Text style={{ fontSize: 24, color: '#ffffff' }}>{item.category.charAt(0).toUpperCase() + item.category.substr(1, item.category.length)}</Text>
+                            <Text style={{ paddingTop: 9 }}>
+                                <FontAwesomeIcon size={24} icon={faArrowRight} />
+                            </Text>
+                        </View>
+                    </Tile>
+                );
+            };
 
             return (
-                <Tile
-                    key={index}
-                    // title={item.category.charAt(0).toUpperCase() + item.category.substr(1, item.category.length)}
-                    // titleStyle={{ color: '#FFDB45' }}
-                    // caption={item.description}
-                    // captionStyle={{ paddingTop: 200, fontSize: 20 }}
-                    contentContainerStyle={{ height: 140}}
-                    imageSrc={{ uri: baseUrl + item.image }}
-                    containerStyle={{height: 500}}
-                    onPress={() => navigate('CategorySelected', {category: item.category})}
-                >
-                    <View
-                        style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
-                    >
-                        <Text style={{fontSize: 24, color: '#ffffff'}}>{item.category.charAt(0).toUpperCase() + item.category.substr(1, item.category.length)}</Text>
-                        <Text style={{ paddingTop: 9}}>
-                            <FontAwesomeIcon size={ 24 } icon={ faArrowRight } />
-                        </Text>
-                    </View>
-                </Tile>
+                <View style={{ backgroundColor: '#fecd21' }}>
+                    <FlatList
+                        data={this.state.products}
+                        renderItem={renderMenuItem}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                </View>
             );
-        };
-        
-        return (
-            <View style={{backgroundColor: '#fecd21'}}>
-                <FlatList
-                    data={this.state.products}
-                    renderItem={renderMenuItem}
-                    keyExtractor={item => item.id.toString()}
-                />
-            </View>
-        );
     }
 }
 
-const style = StyleSheet.create(
+const styles = StyleSheet.create(
     {
         marginTopSpace: {
             marginTop: "20px"
+        },
+        container: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
         }
     }
 );

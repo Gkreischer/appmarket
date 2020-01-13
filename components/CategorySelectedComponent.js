@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { baseUrl } from './shared/baseUrl';
+import { ListItem } from 'react-native-elements';
+
 
 class CategorySelected extends Component {
     constructor(props){
@@ -13,7 +15,6 @@ class CategorySelected extends Component {
         }
 
         this.loadProductsOfCategory = this.loadProductsOfCategory.bind(this);
-        this.loadProductsOfCategory(this.props.navigation.getParam('CategorySelected', ''));
 
     }
 
@@ -25,8 +26,12 @@ class CategorySelected extends Component {
         this.loadProductsOfCategory();
     }
 
+    
+
+
     loadProductsOfCategory(category){
-        fetch(baseUrl + category)
+        const categorySelected = this.props.navigation.getParam('category','');
+        fetch(baseUrl + `products?filter[where][category]=${categorySelected}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -35,16 +40,31 @@ class CategorySelected extends Component {
                 }
             })
             .then((data) => {
-                console.log(data);
                 this.setState({ productsOfCategory: data });
             })
             .catch(errorReceived => this.setState({ error: errorReceived }))
     }
 
     render() {
+        const renderMenuItem = ({item, index}) => {
+            return (
+                    <ListItem
+                        key={index}
+                        title={item.name}
+                        subtitle={item.description}
+                        hideChevron={true}
+                        leftAvatar={{ source: { uri: baseUrl + item.image }}}
+                      />
+            );
+        };
+
         return(
-            <View style={styles.container}>
-                <Text>{JSON.stringify(this.state.productsOfCategory)}</Text>
+            <View>
+                <FlatList 
+                    data={this.state.productsOfCategory}
+                    renderItem={renderMenuItem}
+                    keyExtractor={item => item.id.toString()}
+                />
             </View>
         );
     }
