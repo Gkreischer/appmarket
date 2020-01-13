@@ -19,17 +19,14 @@ class CategorySelected extends Component {
     }
 
     static navigationOptions = {
-        title: 'Categoria Selecionada'
+        title: 'Categoria'
     };
 
     componentDidMount(){
         this.loadProductsOfCategory();
     }
 
-    
-
-
-    loadProductsOfCategory(category){
+    loadProductsOfCategory(){
         const categorySelected = this.props.navigation.getParam('category','');
         fetch(baseUrl + `products?filter[where][category]=${categorySelected}`)
             .then(response => {
@@ -41,11 +38,13 @@ class CategorySelected extends Component {
             })
             .then((data) => {
                 this.setState({ productsOfCategory: data });
+                navigationOptions.title = categorySelected;
             })
             .catch(errorReceived => this.setState({ error: errorReceived }))
     }
 
     render() {
+        const { navigate } = this.props.navigation;
         const renderMenuItem = ({item, index}) => {
             return (
                     <ListItem
@@ -54,6 +53,7 @@ class CategorySelected extends Component {
                         subtitle={item.description}
                         hideChevron={true}
                         leftAvatar={{ source: { uri: baseUrl + item.image }}}
+                        onPress={() => navigate('ProductSelected', { productId: item.id})}
                       />
             );
         };

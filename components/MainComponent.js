@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, Platform } from 'react-native';
 import Menu from './MenuComponent';
+import ProductDetails from './ProductDetails';
 import { createStackNavigator } from 'react-navigation';
 import CategorySelected from './CategorySelectedComponent';
 
 const MenuNavigator = createStackNavigator({
     Menu: { screen: Menu },
-    CategorySelected: { screen: CategorySelected}
+    CategorySelected: { screen: CategorySelected},
+    ProductSelected: { screen: ProductDetails}
 },
 {
     initialRouteName: 'Menu',
