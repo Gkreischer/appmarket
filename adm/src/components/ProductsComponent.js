@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, CardBody, CardTitle, Button, CardSubtitle, CardText, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Row, Col, Card, CardBody, CardTitle, Button, CardSubtitle, CardText, Form, FormGroup, Label, Input, Table } from 'reactstrap';
 import { Switch, Link, Route, useRouteMatch, withRouter } from 'react-router-dom';
 import { baseUrl } from './../shared/baseUrl';
+import { faBreadSlice } from '@fortawesome/free-solid-svg-icons';
 
 const ActionMenu = (props) => {
     return (
@@ -48,7 +49,7 @@ class AddProduct extends Component {
     }
 
     onFileImageChange(event) {
-        
+
         this.handleImageFile(event.target.files[0]);
     }
 
@@ -65,19 +66,15 @@ class AddProduct extends Component {
             method: 'POST',
             body: formData
         })
-        .then((response) => {
-            return response.json();
-        })
-        .then((imagePath) => {
-            console.log(imagePath.result.files.image[0].name)
-            this.setState({ image: `${baseUrl}containers/images/download/${imagePath.result.files.image[0].name}`})
-        })
-        .then(data => console.log(`Upload success`))
-        .catch(error => console.error(error));
-    }
-
-    returnPathOfImage = locationPath => {
-
+            .then((response) => {
+                return response.json();
+            })
+            .then((imagePath) => {
+                console.log(imagePath.result.files.image[0].name)
+                this.setState({ image: `${baseUrl}containers/images/download/${imagePath.result.files.image[0].name}` })
+            })
+            .then(data => console.log(`Upload success`))
+            .catch(error => console.error(error));
     }
 
     handleForm = event => {
@@ -127,9 +124,9 @@ class AddProduct extends Component {
                                         <Label for="name">Nome</Label>
                                         <Input type="text" name="name" value={this.state.name} id="productName" onChange={this.handleInputChange} />
                                     </FormGroup>
-                                     <FormGroup>
+                                    <FormGroup>
                                         <Label for="image">Imagem</Label>
-                                        <Input type="file" name="image" id="productImage"  onChange={this.onFileImageChange} />
+                                        <Input type="file" name="image" id="productImage" onChange={this.onFileImageChange} />
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="category">Categoria</Label>
@@ -161,21 +158,119 @@ class AddProduct extends Component {
 
 }
 
-const ModifyProduct = (props) => {
-    return (
-        <Card>
-            <CardBody>
-                <CardTitle><h3>Modificar Produto</h3></CardTitle>
-                <CardSubtitle>Preencha o menu abaixo:</CardSubtitle>
-            </CardBody>
-            <CardBody>
-                <CardText>Aqui vai o menu</CardText>
-            </CardBody>
-        </Card>
-    );
+class DeleteProduct extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            productsReceived: []
+        }
+    
+        this.getAllProducts = this.getAllProducts.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
+    }
+
+    componentDidMount() {
+        this.getAllProducts();
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
+    abortController = new AbortController();
+
+    getAllProducts(){
+        fetch(`${baseUrl}products`, { method: 'GET', signal: this.abortController.signal})
+        .then((response) => {
+            if(response.ok){
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        })
+        .then((data) => this.setState({ productsReceived: data}))
+        .then((data) => console.log(JSON.stringify(this.state.productsReceived)))
+        .catch(error => console.error(error));
+    }
+
+    deleteProduct(id){
+        let opConfirm = window.confirm('Você realmente deseja deletar o produto selecionado');
+
+        if(opConfirm){
+            fetch(`${baseUrl}products/${id}`, {
+                method: 'DELETE',
+                body: JSON.stringify(id),
+                signal: this.abortController.signal
+            })
+            .then((response) => {
+                if(response.ok){
+                    return response.json();
+                } else {
+                    throw new Error('Something went wrong on Delete')
+                }
+            })
+            .then((data) => {
+                this.setState({ productsReceived: this.state.productsReceived.filter((product) => product.id !== id)})
+            })
+            .catch((error) => console.error(error));
+        } else {
+            return console.log('Delete operation canceled');
+        }
+    }
+
+    render() {
+
+        return (
+            <Card>
+                <CardBody>
+                    <CardTitle><h3>Deletar Produto</h3></CardTitle>
+                    <CardSubtitle>Clique no X para deletar o produto desejado</CardSubtitle>
+                </CardBody>
+                <CardBody>
+                    <Container>
+                        <Row>
+                            <Col md="12" xs="12">
+                                <Table striped bordered hover size="sm" responsive>
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Categoria</th>
+                                            <th>Marca</th>
+                                            <th>Preço</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                            {this.state.productsReceived.map((product) => {
+                                                return(
+                                                    <tr key={product.id}>
+                                                        <td>{product.name}</td>
+                                                        <td>{product.category}</td>
+                                                        <td>{product.brand}</td>
+                                                        <td>{product.price}</td>
+                                                        <td className="text-center">
+                                                            <Button id={product.id} onClick={(event) => this.deleteProduct(event.target.id)} size="sm" color="danger">
+                                                                X
+                                                            </Button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        
+                                    </tbody>
+                                </Table>
+                            </Col>
+                        </Row>
+                    </Container>
+                </CardBody>
+            </Card>
+        );
+    }
 }
 
-const DeleteProduct = (props) => {
+const ModifyProduct = (props) => {
     return (
         <Card>
             <CardBody>
