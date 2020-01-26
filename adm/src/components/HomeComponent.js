@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { Container, Row, Col } from 'reactstrap';
+import './../App.scss';
 
 class Home extends Component { 
     constructor(props){
@@ -13,7 +14,13 @@ class Home extends Component {
     render() {
         return(
             <React.Fragment>
-                <h1>Home</h1>
+                <Container className="mt-1 mt-md-3">
+                    <Row>
+                        <Col xs="12" md="12">
+                            <h1>Home</h1>
+                        </Col>
+                    </Row>
+                </Container>
             </React.Fragment>
         );
     }

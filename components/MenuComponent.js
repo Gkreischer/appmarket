@@ -66,7 +66,7 @@ class Menu extends Component {
                         // caption={item.description}
                         // captionStyle={{ paddingTop: 200, fontSize: 20 }}
                         contentContainerStyle={{ height: 140 }}
-                        imageSrc={{ uri: baseUrl + item.image }}
+                        imageSrc={{ uri: item.image }}
                         containerStyle={{ height: 500 }}
                         onPress={() => navigate('CategorySelected', { category: item.category })}
                     >

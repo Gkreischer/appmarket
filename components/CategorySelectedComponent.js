@@ -50,7 +50,7 @@ class CategorySelected extends Component {
                         title={item.name}
                         subtitle={item.description}
                         hideChevron={true}
-                        leftAvatar={{ source: { uri: baseUrl + item.image }}}
+                        leftAvatar={{ source: { uri: item.image }}}
                         onPress={() => navigate('ProductSelected', { productId: item.id})}
                       />
             );

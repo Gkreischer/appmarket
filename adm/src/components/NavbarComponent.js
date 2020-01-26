@@ -29,12 +29,12 @@ const NavBar = props => {
               </Link>
             </NavItem>
             <NavItem>
-              <Link className="nav-link" to="/produtos">
+              <Link className="nav-link" to="/products">
                 <span className="fa fa-television"></span> Produtos
               </Link>
             </NavItem>
             <NavItem>
-              <Link className="nav-link" to="/configuracoes">
+              <Link className="nav-link" to="/configurations">
                 <span className="fa fa-wrench"></span> Configurações
               </Link>
             </NavItem>

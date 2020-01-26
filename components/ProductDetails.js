@@ -48,9 +48,9 @@ class ProductDetails extends Component {
         return(
             <ScrollView>
                 <Card
-                    image={{uri: baseUrl + this.state.productLoaded.image}}
+                    image={{uri: this.state.productLoaded.image}}
                     imageProps={{
-                        containerStyle: {height: 400}
+                        containerStyle: {height: 400, marginTop: 15}
                     }}
                 >   
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 52, marginBottom: 20}}>

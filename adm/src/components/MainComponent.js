@@ -24,8 +24,8 @@ class Main extends Component {
                     <Navbar />
                     <Switch>
                         <AuthRoute path="/home" component={Home} redirectTo="/login" authenticated={this.state.isLogged} />
-                        <AuthRoute path="/produtos" component={Products} redirectTo="/login" authenticated={this.state.isLogged} />
-                        <AuthRoute path="/configuracoes" component={Configurations} redirectTo="/login" authenticated={this.state.isLogged} />
+                        <AuthRoute path="/products" component={Products} redirectTo="/login" authenticated={this.state.isLogged} />
+                        <AuthRoute path="/configurations" component={Configurations} redirectTo="/login" authenticated={this.state.isLogged} />
 
                     </Switch>
                 </React.Fragment>
