@@ -55,13 +55,14 @@ class ProductDetails extends Component {
                 >   
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 52, marginBottom: 20}}>
                         <Text style={{fontWeight: 'bold'}}>Nome: {this.state.productLoaded.name}</Text>
-                        <Text style={{fontWeight: 'bold'}}>Preço: R$ {this.state.productLoaded.price}</Text>
+                        <Text style={{fontWeight: 'bold', color: 'red'}}>R$ {this.state.productLoaded.price}</Text>
                     </View>
                     <Text style={{marginBottom: 15, textAlign: "center"}}>
                         Descrição: {this.state.productLoaded.description}
                     </Text>
-                    <Text style={{marginBottom: 15, textAlign: 'center'}}>
-                        Data de cadastro: {new Date(this.state.productLoaded.updatedAt).toLocaleDateString('pt-BR')}
+                    <Text style={{marginBottom: 15, textAlign: 'center', fontWeight: 'bold'}}>
+                        {/* Marked for future optimization */}
+                        Data de cadastro: {`${new Date(this.state.productLoaded.updatedAt).getDate()}/${new Date(this.state.productLoaded.updatedAt).getMonth() + 1}/${new Date(this.state.productLoaded.updatedAt).getFullYear()}`}
                     </Text>
                     
                 </Card>

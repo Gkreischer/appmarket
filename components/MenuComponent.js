@@ -28,6 +28,7 @@ class Menu extends Component {
         this.loadCategorys();
     }
 
+
     removeDuplicates(array, key) {
         let newArray = new Set();
 
@@ -45,7 +46,7 @@ class Menu extends Component {
                 }
             })
             .then((data) => {
-                console.log(data);
+                
                 let arrayWithDuplicateRemoved = this.removeDuplicates(data, 'category');
                 this.setState({ products: arrayWithDuplicateRemoved });
             })

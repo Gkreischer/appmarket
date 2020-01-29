@@ -24,6 +24,7 @@ class CategorySelected extends Component {
     componentDidMount(){
         this.loadProductsOfCategory();
     }
+    
 
     loadProductsOfCategory(){
         const categorySelected = this.props.navigation.getParam('category','');
@@ -48,7 +49,7 @@ class CategorySelected extends Component {
                     <ListItem
                         key={index}
                         title={item.name}
-                        subtitle={item.description}
+                        subtitle={item.description.replace(/(\r\n|\n|\r)/gm," ").substr(0, 40)}
                         hideChevron={true}
                         leftAvatar={{ source: { uri: item.image }}}
                         onPress={() => navigate('ProductSelected', { productId: item.id})}
