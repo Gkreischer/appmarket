@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import { baseUrl } from './shared/baseUrl';
+import { AsyncStorage } from 'react-native';
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -10,11 +13,42 @@ class Login extends Component {
             password: '',
             rememberMe: false
         }
+
+        this.login = this.login.bind(this);
     }
 
     static navigationOptions = {
         title: 'Orçamento',
     };
+
+    storeData = async () => {
+        try {
+            await AsyncStorage.setItem('isLogged', 'true');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    login(){
+        fetch(`${baseUrl}Users/login`, {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => {
+            if(response.ok){
+                return response.json();
+            } else {
+                throw new Error('Nao foi possivel realizar o login');
+            }
+        })
+        .then((data) => {
+            this.storeData;
+        })
+        .catch((error) => console.error(error));
+    }
 
     render() {
         return (
@@ -34,7 +68,7 @@ class Login extends Component {
                 />
                 <Button
                     title="Login"
-                    onPress={() => console.log(JSON.stringify(this.state))}
+                    onPress={() => this.login()}
                 />
             </View>
         );

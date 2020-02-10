@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Login from './LoginComponent';
+import { AsyncStorage } from 'react-native';
 
 class Budget extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             isLogged: false
         }
     }
 
+  
+    retrieveData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('isLogged');
+          if (value !== null && value === 'true') {
+            
+            this.setState({isLogged: true});
+          }
+        } catch (error) {
+          console.log('%c Usuario nao logado', 'color: red');
+          this.setState({isLogged: false});
+        }
+      };
+
     render() {
-        if(this.state.isLogged){
-            return(
+        if (this.state.isLogged) {
+            return (
                 <View>
                     <Text>Budget Component</Text>
                     <Text>
@@ -22,9 +37,9 @@ class Budget extends Component {
                 </View>
             );
         } else {
-            return(
-                <View style={{marginTop: 10}}>
-                    <Text style={{textAlign: 'center'}}>Você precisa logar primeiro</Text>
+            return (
+                <View style={{ marginTop: 10 }}>
+                    <Text style={{ textAlign: 'center' }}>Você precisa logar primeiro</Text>
                     <Login />
                 </View>
             );
