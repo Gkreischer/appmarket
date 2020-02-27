@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Login from './LoginComponent';
-import { AsyncStorage } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 class Budget extends Component {
     constructor(props) {
@@ -12,19 +12,20 @@ class Budget extends Component {
         }
     }
 
-  
-    retrieveData = async () => {
-        try {
-          const value = await AsyncStorage.getItem('isLogged');
-          if (value !== null && value === 'true') {
-            
-            this.setState({isLogged: true});
-          }
-        } catch (error) {
-          console.log('%c Usuario nao logado', 'color: red');
-          this.setState({isLogged: false});
+    verifyStatusUserFromChild = (status) => {
+        this.setState({ isLogged: status});
+    }
+
+    getDataFromSecureStore = async () => {
+        const myStatus = await SecureStore.getItemAsync('isLogged');
+        return myStatus;
+    }
+
+    storeStatusLogin = async () => {
+        if(this.state.isLogged){
+            await SecureStore.setItemAsync('isLogged', 'true');
         }
-      };
+    }
 
     render() {
         if (this.state.isLogged) {
@@ -40,7 +41,8 @@ class Budget extends Component {
             return (
                 <View style={{ marginTop: 10 }}>
                     <Text style={{ textAlign: 'center' }}>Você precisa logar primeiro</Text>
-                    <Login />
+                    <Login verifyStatus={this.verifyStatusUserFromChild}/>
+                    <Text>{JSON.stringify(this.state.isLogged)}</Text>
                 </View>
             );
         }

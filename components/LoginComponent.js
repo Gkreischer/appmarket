@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
-import { AsyncStorage } from 'react-native';
 
 class Login extends Component {
     constructor(props) {
@@ -11,7 +10,9 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
+            errorStatus: false,
+            errorMsg: 'Desculpe, algo errado aconteceu...'
         }
 
         this.login = this.login.bind(this);
@@ -21,15 +22,8 @@ class Login extends Component {
         title: 'Orçamento',
     };
 
-    storeData = async () => {
-        try {
-            await AsyncStorage.setItem('isLogged', 'true');
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
-    login(){
+    login() {
         fetch(`${baseUrl}Users/login`, {
             method: 'POST',
             body: JSON.stringify(this.state),
@@ -37,41 +31,70 @@ class Login extends Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then((response) => {
-            if(response.ok){
-                return response.json();
-            } else {
-                throw new Error('Nao foi possivel realizar o login');
-            }
-        })
-        .then((data) => {
-            this.storeData;
-        })
-        .catch((error) => console.error(error));
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    this.setState({ errorStatus: true });
+                }
+            })
+            .then((data) => {
+                console.log('Logado');
+                this.props.verifyStatus(true);
+            })
+            .catch((error) => console.error(error));
     }
 
-    render() {
-        return (
-            <View>
-                <Input
-                    inputStyle={styles.formRow}
-                    placeholder='Email'
-                    leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
-                    onChangeText={(email) => this.setState({ email: email})}
-                />
-                <Input
-                    inputStyle={styles.formRow}
-                    placeholder='Senha'
-                    leftIcon={{ type: 'font-awesome', name: 'unlock-alt' }}
-                    onChangeText={(password) => this.setState({ password: password})}
 
-                />
-                <Button
-                    title="Login"
-                    onPress={() => this.login()}
-                />
-            </View>
-        );
+    render() {
+        if (!this.state.errorStatus) {
+            return (
+                <View>
+                    <Input
+                        inputStyle={styles.formRow}
+                        placeholder='Email'
+                        leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
+                        onChangeText={(email) => this.setState({ email: email })}
+                    />
+                    <Input
+                        inputStyle={styles.formRow}
+                        placeholder='Senha'
+                        leftIcon={{ type: 'font-awesome', name: 'unlock-alt' }}
+                        onChangeText={(password) => this.setState({ password: password })}
+
+                    />
+                    <Button
+                        title="Login"
+                        onPress={() => this.login()}
+                    />
+                </View>
+            );
+        } else {
+            if (this.state.errorStatus) {
+                <View>
+                    <Input
+                        inputStyle={styles.formRow}
+                        placeholder='Email'
+                        leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
+                        onChangeText={(email) => this.setState({ email: email })}
+                    />
+                    <Input
+                        inputStyle={styles.formRow}
+                        placeholder='Senha'
+                        leftIcon={{ type: 'font-awesome', name: 'unlock-alt' }}
+                        onChangeText={(password) => this.setState({ password: password })}
+
+                    />
+                    <Button
+                        title="Login"
+                        onPress={() => this.login()}
+                    />
+                    <View>
+                        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>Desculpe, algo errado aconteceu...</Text>
+                    </View>
+                </View>
+            }
+        }
     }
 }
 
