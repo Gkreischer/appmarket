@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Login from './LoginComponent';
-import * as SecureStore from 'expo-secure-store';
+import { AsyncStorage } from 'react-native';
 
 class Budget extends Component {
     constructor(props) {
@@ -12,18 +12,42 @@ class Budget extends Component {
         }
     }
 
-    verifyStatusUserFromChild = (status) => {
-        this.setState({ isLogged: status});
+    setStateLoginFromChild = (status) => {
+        this.setState({ isLogged: status });
     }
 
-    getDataFromSecureStore = async () => {
-        const myStatus = await SecureStore.getItemAsync('isLogged');
-        return myStatus;
+    componentDidUpdate() {
+        
+        try {
+            AsyncStorage.setItem('isLogged', 'true');
+        } catch {
+            console.log('Deu ruim');
+        }
     }
 
-    storeStatusLogin = async () => {
-        if(this.state.isLogged){
-            await SecureStore.setItemAsync('isLogged', 'true');
+    componentDidMount() {
+        try {
+            AsyncStorage.getItem('isLogged').then((res) => {
+                this.setState({ isLogged: res})
+            });
+        } catch {
+            console.log('Pegadinha do malandro');
+        }
+    }
+
+    getStateFromStore = () => {
+        if (this.state.isLogged) {
+            console.log('pica');
+        }
+    }
+
+    setStateToStore = async () => {
+        if (this.state.isLogged) {
+            try {
+                await AsyncStorage.setItem('isLogged', 'true');
+            } catch {
+                console.log('Isnt possible to set Status on Storage');
+            }
         }
     }
 
@@ -31,17 +55,14 @@ class Budget extends Component {
         if (this.state.isLogged) {
             return (
                 <View>
-                    <Text>Budget Component</Text>
-                    <Text>
-                        {JSON.stringify(this.state)}
-                    </Text>
+                    <Text style={{textAlign: 'center', marginTop: 10}}>Faça seu orçamento</Text>
                 </View>
             );
         } else {
             return (
                 <View style={{ marginTop: 10 }}>
                     <Text style={{ textAlign: 'center' }}>Você precisa logar primeiro</Text>
-                    <Login verifyStatus={this.verifyStatusUserFromChild}/>
+                    <Login setStatusLogin={this.setStateLoginFromChild} />
                     <Text>{JSON.stringify(this.state.isLogged)}</Text>
                 </View>
             );

@@ -21,7 +21,14 @@ class Login extends Component {
     static navigationOptions = {
         title: 'Orçamento',
     };
+    
+    componentDidMount() {
+        this._isMounted = true;
+    }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     login() {
         fetch(`${baseUrl}Users/login`, {
@@ -39,8 +46,12 @@ class Login extends Component {
                 }
             })
             .then((data) => {
-                console.log('Logado');
-                this.props.verifyStatus(true);
+                if(this._isMounted){
+                    console.log('Logged');
+                    this.props.setStatusLogin(true);
+                } else {
+                    console.log('Could not log in')
+                }
             })
             .catch((error) => console.error(error));
     }

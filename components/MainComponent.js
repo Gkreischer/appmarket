@@ -108,7 +108,6 @@ const MainNavigator = createDrawerNavigator({
       }
 }, {
     drawerBackgroundColor: '#fff',
-    drawerPosition: 'left',
     contentComponent: CustomDrawerContentComponent
 });
 
