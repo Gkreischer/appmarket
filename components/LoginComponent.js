@@ -48,7 +48,7 @@ class Login extends Component {
             .then((data) => {
                 if(this._isMounted){
                     console.log('Logged');
-                    this.props.setStatusLogin(true);
+                    this.props.setStatusLoginAndDate(true, new Date());
                 } else {
                     console.log('Could not log in')
                 }

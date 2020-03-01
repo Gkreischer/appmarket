@@ -46,7 +46,7 @@ class Menu extends Component {
                 }
             })
             .then((data) => {
-                
+                // Remove duplicates of receveid array
                 let arrayWithDuplicateRemoved = this.removeDuplicates(data, 'category');
                 this.setState({ products: arrayWithDuplicateRemoved });
             })
