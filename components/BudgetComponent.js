@@ -13,6 +13,8 @@ class Budget extends Component {
             initialDate: '',
             productsReceived: []
         }
+
+        this.loadCategorys = this.loadCategorys.bind(this);
     }
 
     setStateLoginFromChild = (status, initialDate) => {
@@ -23,6 +25,7 @@ class Budget extends Component {
 
         // If user log in, update state with User status and the date of Login
         try {
+            console.log('Componente atualizou');
             AsyncStorage.setItem('isLogged', 'true');
             AsyncStorage.setItem('loginDate', `${this.state.initialDate}`);
         } catch {
@@ -34,6 +37,8 @@ class Budget extends Component {
 
 
         const finalDate = new Date();
+        console.log(`Final date received: ${finalDate}`);
+        
 
         try {
             // Verify if user is already Logged
@@ -43,24 +48,45 @@ class Budget extends Component {
 
                 } else {
                     this.setState({ isLogged: false });
+                    
                 }
             });
 
             // Verify Login Date and update Login Status of User
 
             AsyncStorage.getItem('loginDate').then((initialDate) => {
+                console.log(`Login date received: ${initialDate}`);
 
                 const diferenceTimeInSeconds = Math.abs(finalDate - initialDate) / 1000;
 
                 if (diferenceTimeInSeconds > '1800') {
                     this.setState({ isLogged: false });
+                    
                 } else {
                     this.setState({ isLogged: true });
+                    
                 }
             });
         } catch {
             console.log('Does not possible to verify the login status of user');
         }
+    }
+
+    loadCategorys() {
+        fetch(baseUrl + 'products')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Algo errado aconteceu...');
+                }
+            })
+            .then((data) => {
+                // Remove duplicates of receveid array
+                this.setState({ productsReceived: data });
+                console.log(JSON.stringify(this.state.productsReceived));
+            })
+            .catch(error => this.setState({ error: error }))
     }
 
     setStateToStore = async () => {
