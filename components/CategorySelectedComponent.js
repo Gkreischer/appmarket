@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, FlatList } from 'react-native';
 import { baseUrl } from './shared/baseUrl';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Icon } from 'react-native-elements';
 
 
 class CategorySelected extends Component {
@@ -18,7 +18,7 @@ class CategorySelected extends Component {
 
     }
     static navigationOptions = {
-        title: 'Categoria'
+        title: 'Categoria Selecionada'
     };
 
     componentDidMount(){
@@ -58,13 +58,21 @@ class CategorySelected extends Component {
         };
 
         return(
-            <View>
+            <ScrollView>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', margin: 10}}>
+                    <Icon name="arrow-left" 
+                    type="font-awesome"
+                    raised
+                    size={24}
+                    color='black'
+                    onPress={() => navigate('Menu')} />
+                </View>
                 <FlatList 
                     data={this.state.productsOfCategory}
                     renderItem={renderMenuItem}
                     keyExtractor={item => item.id.toString()}
                 />
-            </View>
+            </ScrollView>
         );
     }
 }

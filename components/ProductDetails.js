@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import { Card, Badge } from 'react-native-elements';
+import { Card, Icon } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
 
 class ProductDetails extends Component { 
@@ -44,15 +44,23 @@ class ProductDetails extends Component {
     }
 
     render() {
-        
+        const { navigate } = this.props.navigation;
         return(
             <ScrollView>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', margin: 10}}>
+                    <Icon name="arrow-left" 
+                    type="font-awesome"
+                    raised
+                    size={24}
+                    color='black'
+                    onPress={() => navigate('CategorySelected')} />
+                </View>
                 <Card
                     image={{uri: this.state.productLoaded.image}}
                     imageProps={{
-                        containerStyle: {height: 400, marginTop: 15}
+                        containerStyle: {height: 400}
                     }}
-                >   
+                > 
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 52, marginBottom: 20}}>
                         <Text style={{fontWeight: 'bold'}}>Nome: {this.state.productLoaded.name}</Text>
                         <Text style={{fontWeight: 'bold', color: 'red'}}>R$ {this.state.productLoaded.price}</Text>

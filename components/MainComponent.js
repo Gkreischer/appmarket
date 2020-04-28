@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Platform, StyleSheet, ScrollView, Image, Text } from 'react-native';
 import Menu from './MenuComponent';
 import Budget from './BudgetComponent';
+import CategorySelected from './CategorySelectedComponent';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+import ProductDetails from './ProductDetails';
 
 
 const MenuNavigator = createStackNavigator({
@@ -14,27 +16,17 @@ const MenuNavigator = createStackNavigator({
                 color='black'
                 onPress={() => navigation.toggleDrawer()} />
         })
-    }
-},
-    {
-        initialRouteName: 'Menu',
-        navigationOptions: {
-            headerStyle: {
-                // backgroundColor: "#ffc425"
-                backgroundColor: "#39639e",
-                height: 70
-            },
-            headerTintColor: '#FFDB45',
-            headerTitleStyle: {
-                color: "#fff"
-            }
-        }
-    }
-);
-
-const BudgetNavigator = createStackNavigator({
-     Budget: {
-        screen: Budget,
+    },
+    CategorySelected: {
+        screen: CategorySelected,
+        navigationOptions: ({ navigation }) => ({
+            headerLeft: <Icon name="menu" size={24}
+                color='black'
+                onPress={() => navigation.toggleDrawer()} />
+        })
+    },
+    ProductSelected: {
+        screen: ProductDetails,
         navigationOptions: ({ navigation }) => ({
             headerLeft: <Icon name="menu" size={24}
                 color='black'
@@ -43,7 +35,7 @@ const BudgetNavigator = createStackNavigator({
     }
 },
     {
-        initialRouteName: 'Budget',
+        initialRouteName: 'Menu',
         navigationOptions: {
             headerStyle: {
                 // backgroundColor: "#ffc425"
@@ -91,21 +83,6 @@ const MainNavigator = createDrawerNavigator({
             ),
         }
     },
-    Budget:
-      { screen: BudgetNavigator,
-        navigationOptions: {
-          title: 'Orçamento',
-          drawerLabel: 'Orçamento',
-          drawerIcon: ({ tintColor, focused }) => (
-            <Icon
-              name='shopping-basket'
-              type='font-awesome'            
-              size={20}
-              iconStyle={{ color: tintColor }}
-            />
-          ),
-        }
-      }
 }, {
     drawerBackgroundColor: '#fff',
     contentComponent: CustomDrawerContentComponent

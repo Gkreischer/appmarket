@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { Tile } from 'react-native-elements';
+import { ScrollView, View, Text, FlatList, StyleSheet } from 'react-native';
+import { Tile, Icon } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -84,13 +84,13 @@ class Menu extends Component {
             };
 
             return (
-                <View style={{ backgroundColor: '#fecd21' }}>
+                <ScrollView style={{ backgroundColor: '#fecd21' }}>
                     <FlatList
                         data={this.state.products}
                         renderItem={renderMenuItem}
                         keyExtractor={item => item.id.toString()}
                     />
-                </View>
+                </ScrollView>
             );
         } else {
             return(
