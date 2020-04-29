@@ -84,13 +84,13 @@ class Menu extends Component {
             };
 
             return (
-                <ScrollView style={{ backgroundColor: '#fecd21' }}>
+                <View style={{ backgroundColor: '#fecd21' }}>
                     <FlatList
                         data={this.state.products}
                         renderItem={renderMenuItem}
                         keyExtractor={item => item.id.toString()}
                     />
-                </ScrollView>
+                </View>
             );
         } else {
             return(

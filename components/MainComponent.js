@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform, StyleSheet, ScrollView, Image, Text } from 'react-native';
+import { View, Platform, StyleSheet, ScrollView, Image, Text, YellowBox } from 'react-native';
 import Menu from './MenuComponent';
 import Budget from './BudgetComponent';
 import CategorySelected from './CategorySelectedComponent';
@@ -14,28 +14,59 @@ const MenuNavigator = createStackNavigator({
         navigationOptions: ({ navigation }) => ({
             headerLeft: <Icon name="menu" size={24}
                 color='black'
+                raised
                 onPress={() => navigation.toggleDrawer()} />
         })
     },
     CategorySelected: {
         screen: CategorySelected,
         navigationOptions: ({ navigation }) => ({
-            headerLeft: <Icon name="menu" size={24}
+            headerLeft: <Icon  name="arrow-left" type="font-awesome" size={24}
                 color='black'
-                onPress={() => navigation.toggleDrawer()} />
+                raised
+                onPress={() => navigation.goBack()} />
         })
     },
     ProductSelected: {
         screen: ProductDetails,
         navigationOptions: ({ navigation }) => ({
-            headerLeft: <Icon name="menu" size={24}
+            headerLeft: <Icon name="arrow-left" size={24}
+                type="font-awesome"
                 color='black'
-                onPress={() => navigation.toggleDrawer()} />
+                raised
+                onPress={() => navigation.goBack()} />
         })
     }
 },
     {
         initialRouteName: 'Menu',
+        navigationOptions: {
+            headerStyle: {
+                // backgroundColor: "#ffc425"
+                backgroundColor: "#39639e",
+                height: 70
+            },
+            headerTintColor: '#FFDB45',
+            headerTitleStyle: {
+                color: "#fff"
+            }
+        }
+    }
+);
+
+const BudgetNavigator = createStackNavigator({
+    Budget: {
+        screen: Budget,
+        navigationOptions: ({ navigation }) => ({
+            headerLeft: <Icon name="menu" size={24}
+                color='black'
+                raised
+                onPress={() => navigation.toggleDrawer()} />
+        })
+    }
+},
+    {
+        initialRouteName: 'Budget',
         navigationOptions: {
             headerStyle: {
                 // backgroundColor: "#ffc425"
@@ -83,6 +114,22 @@ const MainNavigator = createDrawerNavigator({
             ),
         }
     },
+    Budget:
+    {
+        screen: BudgetNavigator,
+        navigationOptions: {
+            title: 'Orçamento',
+            drawerLabel: 'Orçamento',
+            drawerIcon: ({ tintColor, focused }) => (
+                <Icon
+                    name='handshake-o'
+                    type='font-awesome'
+                    size={20}
+                    color={tintColor}
+                />
+            ),
+        }
+    }
 }, {
     drawerBackgroundColor: '#fff',
     contentComponent: CustomDrawerContentComponent
@@ -92,7 +139,10 @@ const MainNavigator = createDrawerNavigator({
 class Main extends Component {
     constructor(props) {
         super(props);
-
+        YellowBox.ignoreWarnings([
+            'componentWillReceiveProps has been renamed',
+            'Setting DrawerLayoutAndroid'
+        ]);
         this.state = {
 
         }

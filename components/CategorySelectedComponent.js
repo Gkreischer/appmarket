@@ -58,21 +58,13 @@ class CategorySelected extends Component {
         };
 
         return(
-            <ScrollView>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', margin: 10}}>
-                    <Icon name="arrow-left" 
-                    type="font-awesome"
-                    raised
-                    size={24}
-                    color='black'
-                    onPress={() => navigate('Menu')} />
-                </View>
+            <View>
                 <FlatList 
                     data={this.state.productsOfCategory}
                     renderItem={renderMenuItem}
                     keyExtractor={item => item.id.toString()}
                 />
-            </ScrollView>
+            </View>
         );
     }
 }

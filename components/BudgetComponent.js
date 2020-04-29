@@ -43,7 +43,8 @@ class Budget extends Component {
         try {
             // Verify if user is already Logged
             AsyncStorage.getItem('isLogged').then((res) => {
-                if (res === true) {
+
+                if (res === 'true') {
                     this.setState({ isLogged: res });
 
                 } else {
@@ -52,21 +53,6 @@ class Budget extends Component {
                 }
             });
 
-            // Verify Login Date and update Login Status of User
-
-            AsyncStorage.getItem('loginDate').then((initialDate) => {
-                console.log(`Login date received: ${initialDate}`);
-
-                const diferenceTimeInSeconds = Math.abs(finalDate - initialDate) / 1000;
-
-                if (diferenceTimeInSeconds > '1800') {
-                    this.setState({ isLogged: false });
-                    
-                } else {
-                    this.setState({ isLogged: true });
-                    
-                }
-            });
         } catch {
             console.log('Does not possible to verify the login status of user');
         }

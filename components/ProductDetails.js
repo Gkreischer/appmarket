@@ -47,14 +47,6 @@ class ProductDetails extends Component {
         const { navigate } = this.props.navigation;
         return(
             <ScrollView>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', margin: 10}}>
-                    <Icon name="arrow-left" 
-                    type="font-awesome"
-                    raised
-                    size={24}
-                    color='black'
-                    onPress={() => navigate('CategorySelected')} />
-                </View>
                 <Card
                     image={{uri: this.state.productLoaded.image}}
                     imageProps={{
