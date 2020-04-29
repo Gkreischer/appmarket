@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Linking } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
-import { baseUrl } from './shared/baseUrl';
 
 class Contact extends Component {
     constructor(props) {
@@ -19,7 +18,6 @@ class Contact extends Component {
 
 
     render() {
-
         return (
             <View style={styles.container}>
                 <Card
@@ -31,26 +29,28 @@ class Contact extends Component {
                     <Text>Rio das Ostras</Text>
                     <Text style={{ fontWeight: 'bold' }}>
                         Endereço:
-                        </Text>
+                    </Text>
                     <Text>
                         Avenida Amazonas, 49 - Loja 12
-                        </Text>
+                    </Text>
                     <Text style={{ fontWeight: 'bold' }}>Ponto de referência:</Text>
                     <Text>
                         em frente as lojas Americanas
-                        </Text>
+                    </Text>
                     <Text style={{ fontWeight: 'bold' }}>Telefone:</Text>
-                    <Text>
+                    <Text style={{color: 'blue'}} onPress={() => Linking.openURL('tel:02227643285')}>
                         22 2764-3285
-                        </Text>
+                    </Text>
                     <Text style={{ fontWeight: 'bold' }}>Horário de funcionamento:</Text>
                     <Text>
                         10:00 às 17 horas - Segunda a Sexta
                         </Text>
                     <Text style={{ fontWeight: 'bold' }}>
                         Email:
-                        </Text>
-                    <Text>sigatec@gmail.com</Text>
+                    </Text>
+                    <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('mailto:sigatec@gmail.com')}>
+                        sigatec@gmail.com
+                    </Text>
                 </Card>
 
             </View>
