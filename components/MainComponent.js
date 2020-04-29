@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Platform, StyleSheet, ScrollView, Image, Text, YellowBox } from 'react-native';
 import Menu from './MenuComponent';
-import Budget from './BudgetComponent';
+import Contact from './ContactComponent';
 import CategorySelected from './CategorySelectedComponent';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -54,9 +54,9 @@ const MenuNavigator = createStackNavigator({
     }
 );
 
-const BudgetNavigator = createStackNavigator({
-    Budget: {
-        screen: Budget,
+const ContactNavigator = createStackNavigator({
+    Contact: {
+        screen: Contact,
         navigationOptions: ({ navigation }) => ({
             headerLeft: <Icon name="menu" size={24}
                 color='black'
@@ -66,7 +66,7 @@ const BudgetNavigator = createStackNavigator({
     }
 },
     {
-        initialRouteName: 'Budget',
+        initialRouteName: 'Contact',
         navigationOptions: {
             headerStyle: {
                 // backgroundColor: "#ffc425"
@@ -114,15 +114,15 @@ const MainNavigator = createDrawerNavigator({
             ),
         }
     },
-    Budget:
+    Contact:
     {
-        screen: BudgetNavigator,
+        screen: ContactNavigator,
         navigationOptions: {
-            title: 'Orçamento',
-            drawerLabel: 'Orçamento',
+            title: 'Contato',
+            drawerLabel: 'Contato',
             drawerIcon: ({ tintColor, focused }) => (
                 <Icon
-                    name='handshake-o'
+                    name='info-circle'
                     type='font-awesome'
                     size={20}
                     color={tintColor}
