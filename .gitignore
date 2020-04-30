@@ -12,6 +12,7 @@ web-report/
 
 loopback/sigatec/sigatedb/
 loopback/sigatec/server/storage/images/
+loopback/db/
 
 # macOS
 .DS_Store

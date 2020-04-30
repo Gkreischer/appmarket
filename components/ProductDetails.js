@@ -48,6 +48,7 @@ class ProductDetails extends Component {
         return(
             <ScrollView>
                 <Card
+                    containerStyle={{marginBottom: 15}}
                     image={{uri: this.state.productLoaded.image}}
                     imageProps={{
                         containerStyle: {height: 400}

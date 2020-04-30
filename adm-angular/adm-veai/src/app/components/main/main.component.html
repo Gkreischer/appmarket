@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="columns">
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <aside class="menu">
+                        <p class="menu-label">
+                            Geral
+                        </p>
+                        <ul class="menu-list">
+                            <li><a>Informações</a></li>
+                        </ul>
+                        <p class="menu-label">
+                            Administração
+                        </p>
+                        <ul class="menu-list">
+                            <li>
+                                <a>Cadastre um produto</a>
+                                <ul>
+                                    <li><a routerLink="./addProduto" routerLinkActive="is-active">Adicionar</a>
+                                    </li>
+                                    <li><a routerLink="./listarProdutos" routerLinkActive="is-active">Listar</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="card-content">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

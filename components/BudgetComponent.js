@@ -89,7 +89,7 @@ class Budget extends Component {
         if (this.state.isLogged) {
             return (
                 <View>
-                    <Text style={{ textAlign: 'center', marginTop: 10 }}>Faça seu orçamento</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 10 }} >Faça seu orçamento</Text>
                 </View>
             );
         } else {
