@@ -35,32 +35,36 @@
             <div class="field">
                 <div class="file has-name">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
+                        <input class="file-input" (change)="uploadImageEquipment($event)" type="file" name="resume" />
                         <span class="file-cta">
                             <span class="file-icon">
                                 <i class="fa fa-file"></i>
                             </span>
                             <span class="file-label">
-                                Choose a file…
+                                Escolha um arquivo...
                             </span>
                         </span>
                         <span class="file-name">
-                            Screen Shot 2017-07-29 at 15.54.25.png
+                            {{fileUploadName}}
                         </span>
                     </label>
                 </div>
             </div>
             <div class="field is-grouped">
                 <div class="control">
-                    <button class="button is-link">Enviar</button>
+                    <button type="button" (click)="updateProductAndGoBackRoute($event)" id={{this.selectedId}} *ngIf="this.selectedId !== null" class="button is-link">Atualizar</button>
                 </div>
                 <div class="control">
-                    <button class="button is-link is-light">Cancelar</button>
+                    <button *ngIf="this.selectedId === null" class="button is-link">Enviar</button>
+                </div>
+                <div class="control">
+                    <button type="button" (click)="cancelSendForm()" class="button is-link is-light">Cancelar</button>
                 </div>
             </div>
         </form>
     </div>
     <div class="column">
-        <h1>Image preload here</h1>
+        <img *ngIf="this.formProduct.get('image').value !== ''" src="{{this.formProduct.get('image').value}}" alt="Description of image">
+        <h1 *ngIf="this.formProduct.get('image').value === ''">Selecione uma imagem para enviar</h1>
     </div>
 </div>

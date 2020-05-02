@@ -7,19 +7,22 @@ import { MainComponent } from './components/main/main.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ListProductComponent } from './components/list-product/list-product.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { InfoComponent } from './components/info/info.component'
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     ErrorComponent,
     AddProductComponent,
-    ListProductComponent
+    ListProductComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

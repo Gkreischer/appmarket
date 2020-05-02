@@ -1,15 +1,21 @@
-<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+<table *ngIf="products.length !== 0" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
         <tr>
             <th scope="col">Nome</th>
             <th scope="col">Valor</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Ações</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let product of products; let i = index">
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.category}}</td>
+            <td style="width: 148px">
+                <button id={{product.id}} (click)="getInfoOfSelectProduct($event)" type="button" class="button is-primary is-small">Editar</button>
+                <button id="{{product.id}}" (click)="deleteProduct($event, i)" type="button" class="button is-danger is-small">Deletar</button>
+            </td>
         </tr>
 </table>
+<p *ngIf="products.length === 0">Você não possui produtos cadastrados</p>

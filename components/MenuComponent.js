@@ -4,7 +4,7 @@ import { Tile, Icon } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import CategorySelected from './CategorySelectedComponent';
+import Spinner from './SpinnerComponent';
 
 class Menu extends Component {
     constructor(props) {
@@ -12,7 +12,8 @@ class Menu extends Component {
 
         this.state = {
             products: [],
-            error: ''
+            error: '',
+            isLoading: false
         }
 
         this.loadCategorys = this.loadCategorys.bind(this);
@@ -37,6 +38,7 @@ class Menu extends Component {
     }
 
     loadCategorys() {
+        this.setState({isLoading: true})
         fetch(baseUrl + 'products')
             .then(response => {
                 if (response.ok) {
@@ -48,17 +50,17 @@ class Menu extends Component {
             .then((data) => {
                 // Remove duplicates of receveid array
                 let arrayWithDuplicateRemoved = this.removeDuplicates(data, 'category');
-                this.setState({ products: arrayWithDuplicateRemoved });
+                this.setState({ products: arrayWithDuplicateRemoved, isLoading: false });
             })
             .catch(error => this.setState({ error: error }))
     }
 
     render() {
-        if(this.state.products.length != 0){
+        if (this.state.isLoading === false && this.state.products.length !== 0) {
             const { navigate } = this.props.navigation;
-        
-            const renderMenuItem = ({ item, index }) => {
 
+            const renderMenuItem = ({ item, index }) => {
+                console.log(item);
                 return (
                     <Tile
                         key={index}
@@ -93,11 +95,21 @@ class Menu extends Component {
                 </View>
             );
         } else {
-            return(
-                <View style={styles.container}>
-                    <Text>Você ainda não possui produtos cadastrados</Text>
-                </View>
-            );
+            if(this.state.isLoading === true){
+                return(
+                    <View style={styles.container}>
+                        <Spinner />
+                    </View>
+                );
+            } else {
+                if(this.state.products.length === 0){
+                    return (
+                        <View style={styles.container}>
+                            <Text>Você ainda não possui produtos cadastrados</Text>
+                        </View>
+                    );
+                }
+            }
         }
     }
 }
