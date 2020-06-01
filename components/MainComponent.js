@@ -141,7 +141,8 @@ class Main extends Component {
         super(props);
         YellowBox.ignoreWarnings([
             'componentWillReceiveProps has been renamed',
-            'Setting DrawerLayoutAndroid'
+            'Setting DrawerLayoutAndroid',
+            'Setting DrawerLayoutAndroid drawerPosition'
         ]);
         this.state = {
 

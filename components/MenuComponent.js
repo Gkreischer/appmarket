@@ -60,7 +60,6 @@ class Menu extends Component {
             const { navigate } = this.props.navigation;
 
             const renderMenuItem = ({ item, index }) => {
-                console.log(item);
                 return (
                     <Tile
                         key={index}

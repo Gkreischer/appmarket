@@ -1,0 +1,9 @@
+button {
+    margin-right: 5px;
+}
+
+.customPagination::ng-deep .ngx-pagination .current {
+    border-radius: 15px;
+    margin-top: 8px;
+    margin-left: 4px;
+  }

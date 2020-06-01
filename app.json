@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "VeAi",
-    "slug": "your-app-slug",
+    "slug": "VeAi",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -22,7 +22,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.greymorning.veai",
+      "buildNumber": "0.95"
+    },
+    "android": {
+      "package": "com.greymorning.veai",
+      "versionCode": 1
     }
   }
 }
