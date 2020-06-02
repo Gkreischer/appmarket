@@ -1,7 +1,7 @@
 <div class="columns">
     <div class="column is-6">
         <p class="has-text-weight-bold">Adicione um produto</p>
-        <form [formGroup]="formProduct" (ngSubmit)="sendForm()">
+        <form [formGroup]="formProduct" (ngSubmit)="sendFormToServer()">
             <div class="field">
                 <label>Nome</label>
                 <div class="control">
@@ -11,7 +11,14 @@
             <div class="field">
                 <label>Categoria</label>
                 <div class="control">
-                    <input type="text" class="input" formControlName="category" />
+                    <div class="select">
+                        <select formControlName="category">
+                            <option value="">Selecione uma categoria</option>
+                            <option *ngFor="let category of categories" value={{category.category}}>{{category.category}}</option>
+                        </select>
+                    </div>
+                    <button type="button" (click)="toggleModal()" class="button is-link"
+                        style="margin-left: 0.5em;">Adicionar</button>
                 </div>
             </div>
             <div class="field">
@@ -52,10 +59,11 @@
             </div>
             <div class="field is-grouped">
                 <div class="control">
-                    <button type="button" (click)="updateProductAndGoBackRoute($event)" id={{this.selectedId}} *ngIf="this.selectedId !== null" class="button is-link">Atualizar</button>
+                    <button type="button" (click)="updateProductAndGoBackRoute($event)" id={{this.selectedId}}
+                        *ngIf="this.selectedId !== null" class="button is-link">Atualizar</button>
                 </div>
                 <div class="control">
-                    <button *ngIf="this.selectedId === null" class="button is-link">Enviar</button>
+                    <button style="margin-left: -12px;" *ngIf="this.selectedId === null" class="button is-link">Enviar</button>
                 </div>
                 <div class="control">
                     <button type="button" (click)="cancelSendForm()" class="button is-link is-light">Cancelar</button>
@@ -64,7 +72,51 @@
         </form>
     </div>
     <div class="column">
-        <img *ngIf="this.formProduct.get('image').value !== ''" src="{{this.formProduct.get('image').value}}" alt="Description of image">
+        <img *ngIf="this.formProduct.get('image').value !== ''" src="{{this.formProduct.get('image').value}}"
+            alt="Description of image">
         <h1 *ngIf="this.formProduct.get('image').value === ''">Selecione uma imagem para enviar</h1>
     </div>
 </div>
+<!-- Modal of Categories -->
+<div class="modal" [class.is-active]="modalIsOpen">
+    <div class="modal-background"></div>
+    <form [formGroup]="formCategory" (ngSubmit)="addCategory()">
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Adicionar categoria</p>
+                <button type="button" (click)="toggleModal()" class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+
+                <div class="container">
+                    <div class="columns">
+                        <div class="column">
+                            <div *ngIf="categories.length !== 0">
+                                <p>Categorias adicionadas:</p>
+                                <span style="margin: 3px 3px;" *ngFor="let category of categories; let i = index" class="tag is-success">
+                                    {{category.category}}
+                                    <button type="button" id={{category.id}} (click)="deleteCategory($event, i)"
+                                        class="delete is-small"></button>
+                                </span>
+                            </div>
+                            <p *ngIf="categories.length === 0">Nenhuma categoria cadastrada ainda</p>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Categoria</label>
+                                <div class="control">
+                                    <input type="text" class="input" formControlName="category" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button type="submit" class="button is-success">Adicionar</button>
+                <button type="button" (click)="toggleModal()" class="button">Cancelar</button>
+            </footer>
+        </div>
+    </form>
+</div>
+<!-- End modal Categories -->

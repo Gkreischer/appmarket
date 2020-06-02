@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CrudService } from 'src/app/services/crud.service';
 import { takeUntil } from 'rxjs/operators';
 import { Product } from 'src/app/shared/product';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.scss']
 })
-export class ListProductComponent implements OnInit {
+export class ListProductComponent implements OnInit, OnDestroy {
 
   constructor(private crud: CrudService, private router: Router) { }
 

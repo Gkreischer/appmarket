@@ -5,7 +5,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ListProductComponent } from './components/list-product/list-product.component';
 import { InfoComponent } from './components/info/info.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [

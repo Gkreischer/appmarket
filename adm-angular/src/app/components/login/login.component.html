@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column is-4">
+            <div class="card" style="margin-top: 150px">
+                <div class="card-header">
+                    <p class="card-header-title">
+                        Login
+                    </p>
+                </div>
+                <div class="card-content">
+                    <div class="container">
+                        <div class="columns is-centered">
+                            <div class="column is-10">
+                                <form [formGroup]="formLogin" (ngSubmit)="sendFormToServer()">
+                                    <div class="control">
+                                        <label class="label">Email</label>
+                                        <div class="field">
+                                            <input class="input" type="text" formControlName="email" />
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <label class="label">Senha</label>
+                                        <div class="field">
+                                            <input class="input" type="password" formControlName="password" />
+                                        </div>
+                                    </div>
+                                    <div class="control" style="text-align: center; margin-top: 10px">
+                                        <button class="button is-primary">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <div *ngIf="isError && !isSuccess" class="notification is-danger" style="text-align: center;">
+                                    {{errorMessage}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
