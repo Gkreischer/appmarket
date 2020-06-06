@@ -178,12 +178,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.formProduct.controls['image'].setValue(defaultUrlForImage);
   }
 
-  toggleModal() {
-    this.loadCategories();
-    return this.modalIsOpen = !this.modalIsOpen;
-  }
-
-
   uploadImageEquipment($event) {
     const image = $event.target.files[0];
     console.log('Image send from user', image);
@@ -201,6 +195,11 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }, error => {
       console.log(error);
     })
+  }
+
+  toggleModal() {
+    this.loadCategories();
+    return this.modalIsOpen = !this.modalIsOpen;
   }
 
   ngOnDestroy() {

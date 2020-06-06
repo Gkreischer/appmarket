@@ -1,7 +1,39 @@
 <div class="container">
     <div class="columns">
         <div class="column">
-            <h1>Produtos cadastrados: {{this.products.length}}</h1>
+            <div class="tags has-addons">
+                <span class="tag is-primary">Produtos cadastrados</span>
+                <p class="tag">{{this.products.length}}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="marketInfo" class="columns">
+        <div class="column">
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <article class="tile is-child notification is-success">
+                        <div class="content">
+                            <p class="subtitle">Dados da loja</p>
+                            <div class="content">
+                                <p class="is-size-6">Nome da loja: {{marketInfo.name}}</p>
+                                <p class="is-size-6">Email: {{marketInfo.email}}</p>
+                                <p class="is-size-6">Telefone: {{marketInfo.tel}}</p>
+                                <p class="is-size-6">Endereço: {{marketInfo.address}}</p>
+                                <p class="is-size-6">Bairro: {{marketInfo.district}}</p>
+                                <p class="is-size-6">CEP: {{marketInfo.zipcode}}</p>
+                                <p class="is-size-6">Cidade: {{marketInfo.city}}</p>
+                                <p class="is-size-6">País: {{marketInfo.country}}</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child notification is-secondary">
+                        <p class="subtitle">Logo da loja</p>
+                        <img class="image is-rounded" style="margin: 0 auto;" src="{{marketInfo.logoImg}}" alt="Description" />
+                    </article>
+                </div>
+            </div>
         </div>
     </div>
 </div>

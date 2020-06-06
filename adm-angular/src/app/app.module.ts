@@ -17,6 +17,7 @@ import { AuthInterceptor } from './inteceptors/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginService } from './services/login.service';
 import { AuthGuard } from './guards/auth.guard';
+import { MarketconfigComponent } from './components/marketconfig/marketconfig.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { AuthGuard } from './guards/auth.guard';
     AddProductComponent,
     ListProductComponent,
     InfoComponent,
-    LoginComponent
+    LoginComponent,
+    MarketconfigComponent
   ],
   imports: [
     BrowserModule,

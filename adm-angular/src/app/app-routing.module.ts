@@ -7,6 +7,7 @@ import { ListProductComponent } from './components/list-product/list-product.com
 import { InfoComponent } from './components/info/info.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { MarketconfigComponent } from './components/marketconfig/marketconfig.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
         path: 'info',
         component: InfoComponent
       },
+      {
+        path: 'marketconfig',
+        component: MarketconfigComponent
+      }
     ]
   },
   {

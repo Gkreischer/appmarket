@@ -22,6 +22,14 @@ export class CrudService {
       );
   }
 
+  getSpecificData(route: string, property: string, value: string): Observable<any> {
+    return this.http.get<any>(`${baseUrl + route}?filter[where][${property}]=${value}`)
+    .pipe(
+      tap(data => console.log('fetched specific data from server')),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

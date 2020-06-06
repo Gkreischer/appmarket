@@ -47,5 +47,9 @@
   "category": {
     "dataSource": "MongoDB",
     "public": true
+  },
+  "marketInfo": {
+    "dataSource": "MongoDB",
+    "public": true
   }
 }

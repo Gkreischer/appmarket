@@ -1,0 +1,96 @@
+<div class="columns">
+    <div class="column is-6">
+        <h3 class="is-size-5">Dados da sua loja</h3>
+        <form [formGroup]="formInfoMarket" (ngSubmit)="sendForm()">
+            <div class="field">
+                <label class="label">Nome da loja</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="name">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="email">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Telefone</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="tel">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Endereço</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="address">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Bairro</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="district">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">CEP</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="zipcode">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Cidade</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="city">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">País</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="country">
+                </div>
+            </div>
+            <div class="field">
+                <div class="file has-name">
+                    <label class="file-label">
+                        <input class="file-input" (change)="uploadLogoImage($event)" type="file" name="resume" />
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fa fa-file"></i>
+                            </span>
+                            <span class="file-label">
+                                Escolha um arquivo...
+                            </span>
+                        </span>
+                        <span class="file-name">
+                            {{fileUploadName}}
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button *ngIf="!isMarketInfo" type="submit" class="button is-primary">Salvar</button>
+                    <button *ngIf="isMarketInfo" (click)="updateMarketInfo()" type="button" class="button is-primary">Atualizar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="column has-text-centered">
+        <img *ngIf="this.formInfoMarket.get('logoImg').value !== ''" src="{{this.formInfoMarket.get('logoImg').value}}"
+            alt="Description of image">
+        <h1 *ngIf="this.formInfoMarket.get('logoImg').value === ''">Selecione uma imagem para enviar</h1>
+    </div>
+</div>
+<div class="columns">
+    <div *ngIf="isSuccess && !isError" class="column has-text-centered">
+        <div class="notification is-primary">
+            <button class="delete"></button>
+            Dados da loja cadastrados
+        </div>
+        <div *ngIf="isError && !isSuccess" class="notification is-danger">
+            <button class="delete"></button>
+            Desculpe, algo errado aconteceu...
+        </div>
+    </div>
+</div>

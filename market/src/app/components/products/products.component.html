@@ -15,68 +15,94 @@
                 <hr style="margin-top: 0px;">
                 <h3><b>{{product.name}}</b></h3>
                 <h3 class="has-text-weight-semi-bold">R${{product.price}}</h3>
-                <button class="button is-link is-small has-text-right">Detalhes</button>
+                <button type="button" id={{product.id}} (click)="toggleModal($event)"
+                    class="button is-link is-small has-text-right">Detalhes</button>
             </div>
         </div>
     </div>
 </div>
 <div class="columns">
-    <div class="column" style="display: flex; justify-content: center;">
-        <pagination-controls responsive="true" autoHide="true" previousLabel="Anterior" nextLabel="Próxima"
-            (pageChange)="p = $event" class="customPagination pagination is-rounded">
-        </pagination-controls>
-    </div>
-</div>
-
-<!-- <div class="columns">
     <div class="column">
         <div class="tile is-ancestor">
-            <div class="tile is-vertical is-8">
+            <div class="tile is-vertical is-6">
                 <div class="tile">
                     <div class="tile is-parent is-vertical">
-                        
-                        <article class="tile is-child notification is-primary">
-                            <p class="title">Vertical...</p>
-                            <p class="subtitle">Top tile</p>
-                        </article>
-                        <article class="tile is-child notification is-warning">
-                            <p class="title">...tiles</p>
-                            <p class="subtitle">Bottom tile</p>
-                        </article>
-                        <article class="tile is-child notification is-warning">
-                            <p class="title">...tiles</p>
-                            <p class="subtitle">Bottom tile</p>
+                        <article *ngFor="let category of categories" id="{{category.category}}"
+                            (click)="showProductsCategory($event)" class="tile is-child notification is-primary">
+                            <p id="{{category.category}}" class="title is-5">{{category.category}}</p>
                         </article>
                     </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification is-info">
-                            <p class="title">Middle tile</p>
-                            <p class="subtitle">With an image</p>
-                            <figure class="image is-4by3">
-                                <img src="https://bulma.io/images/placeholders/640x480.png">
-                            </figure>
+                    <div *ngIf="produtsOfCategorySelected !== undefined" class="tile is-parent">
+                        <article class="tile is-child notification is-success">
+                            <div class="content">
+                                <p class="subtitle">Produtos da categoria</p>
+                                <div class="content">
+                                    <article *ngFor="let product of produtsOfCategorySelected; let i = index" class="media">
+                                        <figure class="media-left">
+                                            <p class="image is-64x64">
+                                                <img class="is-rounded" src="{{product.image}}" alt="Placeholder of Image">
+                                            </p>
+                                        </figure>
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <p>
+                                                    <strong>{{product.name}}</strong>
+                                                    <br>
+                                                    {{product.brand}}
+                                                    <br>
+                                                    <strong>R${{product.price}}</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="media-right">
+                                            <button id="{{product.id}}" (click)="toggleModal($event)" type="button" class="button is-light is-small">
+                                                Ver
+                                            </button>
+                                          </div>
+                                    </article>
+                                </div>
+                            </div>
                         </article>
                     </div>
-                </div>
-                <div class="tile is-parent">
-                    <article class="tile is-child notification is-danger">
-                        <p class="title">Wide tile</p>
-                        <p class="subtitle">Aligned with the right tile</p>
-                        <div class="content">
-                        </div>
-                    </article>
                 </div>
             </div>
             <div class="tile is-parent">
-                <article class="tile is-child notification is-success">
-                    <div class="content">
-                        <p class="title">Tall tile</p>
-                        <p class="subtitle">With even more content</p>
-                        <div class="content">
-                        </div>
+                <article *ngFor="let product of products | slice:0:1; let i = index"
+                    class="tile is-child notification is-info">
+                    <p class="title">Produto da semana</p>
+                    <p class="subtitle">{{product.name}} - R${{product.price}}</p>
+                    <figure class="image is-square">
+                        <img src="{{product.image}}" alt="Placeholder image">
+                    </figure>
+                    <hr>
+                    <div class="has-text-centered">
+                        <p>{{product.description}}</p>
                     </div>
                 </article>
             </div>
         </div>
     </div>
-</div> -->
+</div>
+
+<div *ngIf="productSelectedDetails" class="modal" [class.is-active]="isModalOpen">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{productSelectedDetails.category}}</p>
+            <button type="button" id="null" (click)="toggleModal($event)" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <figure class="image is-square">
+                <img src="{{productSelectedDetails.image}}" alt="Placeholder image">
+            </figure>
+            <div class="has-text-black">
+                <p class="is-size-4">{{productSelectedDetails.name}}</p>
+                <p class="is-size-5">Marca: {{productSelectedDetails.brand}}</p>
+                <p class="is-size-4"><u>R$ {{productSelectedDetails.price}}</u></p>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button type="button" class="button" id="null" (click)="toggleModal($event)">Fechar</button>
+        </footer>
+    </div>
+</div>

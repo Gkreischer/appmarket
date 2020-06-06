@@ -48,6 +48,9 @@ export class ListProductComponent implements OnInit, OnDestroy {
     this.crud.getData('/products').pipe(takeUntil(this.destroy)).subscribe((products) => {
       console.log(products);
       this.products = products;
+      this.products.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
       this.isSuccess = true;
       this.isError = false;
     }, error => {
