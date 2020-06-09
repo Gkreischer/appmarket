@@ -1,58 +1,50 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Linking } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
-
+import { baseUrl } from './shared/baseUrl';
+import Spinner from './SpinnerComponent';
 class Contact extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-
+            marketInfo: [],
+            isLoading: false
         }
 
+        this.loadMarketInfo = this.loadMarketInfo.bind(this);
     }
 
     static navigationOptions = {
         title: 'Informações de contato'
     };
 
+    componentDidMount() {
+        this.loadMarketInfo();
+    }
+
+    loadMarketInfo() {
+        this.setState({ isLoading: true })
+        fetch(baseUrl + 'marketInfos')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Algo errado aconteceu...');
+                }
+            })
+            .then((data) => {
+                this.setState({ marketInfo: data, isLoading: false });
+                console.log(JSON.stringify(this.state.marketInfo));
+            })
+            .catch(error => this.setState({ error: error }))
+    }
+
 
     render() {
         return (
-            <View style={styles.container}>
-                <Card
-                    title="Sigatec Informática"
-                    image={require('./../components/shared/images/logo.png')}
-                    imageProps={{ resizeMode: 'stretch' }}
-                >
-                    <Text style={{ fontWeight: 'bold' }}>Cidade:</Text>
-                    <Text>Rio das Ostras</Text>
-                    <Text style={{ fontWeight: 'bold' }}>
-                        Endereço:
-                    </Text>
-                    <Text>
-                        Avenida Amazonas, 49 - Loja 12
-                    </Text>
-                    <Text style={{ fontWeight: 'bold' }}>Ponto de referência:</Text>
-                    <Text>
-                        em frente as lojas Americanas
-                    </Text>
-                    <Text style={{ fontWeight: 'bold' }}>Telefone:</Text>
-                    <Text style={{color: 'blue'}} onPress={() => Linking.openURL('tel:02227643285')}>
-                        22 2764-3285
-                    </Text>
-                    <Text style={{ fontWeight: 'bold' }}>Horário de funcionamento:</Text>
-                    <Text>
-                        10:00 às 17 horas - Segunda a Sexta
-                        </Text>
-                    <Text style={{ fontWeight: 'bold' }}>
-                        Email:
-                    </Text>
-                    <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('mailto:sigatec@gmail.com')}>
-                        sigatec@gmail.com
-                    </Text>
-                </Card>
-
+            <View>
+                <Text>{JSON.stringify(this.state.marketInfo)}</Text>
             </View>
         );
     }

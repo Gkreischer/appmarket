@@ -1,9 +1,15 @@
-<div class="columns">
+<div *ngIf="products.length === 0" class="columns has-text-centered">
+    <div class="column">
+        <p class="title">Nenhum produto cadastrado ainda.</p>
+    </div>
+</div>
+
+<div *ngIf="products.length !== 0" class="columns">
     <div class="column">
         <p class="title">Últimos adicionados</p>
     </div>
 </div>
-<div class="columns is-multiline is-mobile">
+<div *ngIf="products.length !== 0" class="columns is-multiline is-mobile">
     <div *ngFor="let product of products | slice:0:6; let i = index" class="column">
         <div class="card card-equal-height" style="padding-top: 2em">
             <div class="card-image">
@@ -21,7 +27,7 @@
         </div>
     </div>
 </div>
-<div class="columns">
+<div *ngIf="products.length !== 0" class="columns">
     <div class="column">
         <div class="tile is-ancestor">
             <div class="tile is-vertical is-6">

@@ -89,7 +89,7 @@ const CustomDrawerContentComponent = (props) => (
                     <Image source={require('./shared/images/logo.png')} style={styles.drawerImage} />
                 </View>
                 <View style={{ flex: 2 }}>
-                    <Text style={styles.drawerHeaderText}>Sigatec Informática</Text>
+                    <Text style={styles.drawerHeaderText}>Nome da sua Empresa</Text>
                 </View>
             </View>
             <DrawerItems {...props} />

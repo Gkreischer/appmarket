@@ -27,7 +27,6 @@ class ProductDetails extends Component {
     }
 
     loadProductInfo(idReceived) {
-        console.log('Id recebido para carregameto: ', idReceived)
         fetch(baseUrl + `products/${idReceived}`)
         .then((response) =>{
             if(response.ok){
@@ -37,10 +36,8 @@ class ProductDetails extends Component {
             }})
         .then((data) => {
             this.setState({productLoaded: data})
-            console.log(JSON.stringify(this.state.productLoaded));
-
         })
-        .catch((error) => this.setState({error: error}))
+        .catch((error) => this.setState({error: error}));
     }
 
     render() {
