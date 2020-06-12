@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Linking } from 'react-native';
+import { View, StyleSheet, Text, Linking, ScrollView } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
 import Spinner from './SpinnerComponent';
@@ -11,7 +11,7 @@ class Contact extends Component {
             marketInfo: [],
             isLoading: false
         }
-
+        this._isMounted = false;
         this.loadMarketInfo = this.loadMarketInfo.bind(this);
     }
 
@@ -20,12 +20,13 @@ class Contact extends Component {
     };
 
     componentDidMount() {
-        this.loadMarketInfo();
+        this._isMounted = true;
+        this._isMounted && this.loadMarketInfo();
     }
 
-    loadMarketInfo() {
+    async loadMarketInfo() {
         this.setState({ isLoading: true })
-        fetch(baseUrl + 'marketInfos')
+        await fetch(baseUrl + 'marketInfos')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -34,7 +35,7 @@ class Contact extends Component {
                 }
             })
             .then((data) => {
-                this.setState({ marketInfo: data, isLoading: false });
+                this._isMounted && this.setState({ marketInfo: data[0], isLoading: false });
                 console.log(JSON.stringify(this.state.marketInfo));
             })
             .catch(error => this.setState({ error: error }))
@@ -42,17 +43,44 @@ class Contact extends Component {
 
 
     render() {
-        return (
-            <View>
-                <Text>{JSON.stringify(this.state.marketInfo)}</Text>
-            </View>
-        );
+        if(this.state.isLoading){
+            return(
+                <View style={styles.container}>
+                    <Spinner />
+                </View>
+            );
+        } else {
+            return(
+                <ScrollView>
+                    <Card
+                        containerStyle={{marginBottom: 15}}
+                        image={{uri: this.state.marketInfo.logoImg}}
+                        imageStyle={{
+                            height: 400
+                        }}
+                    >
+                        <View>
+                            <Text>Nome da empresa: {this.state.marketInfo.name}</Text>
+                            <Text>Telefone: {this.state.marketInfo.tel}</Text>
+                            <Text>Email: {this.state.marketInfo.email}</Text>
+                            <Text>Endereço: {this.state.marketInfo.address}</Text>
+                            <Text>Bairro: {this.state.marketInfo.district}</Text>
+                            <Text>Cidade: {this.state.marketInfo.city}</Text>
+                            <Text>País: {this.state.marketInfo.country}</Text>
+                        </View>
+
+                    </Card>
+            </ScrollView>
+            );
+        }
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     centralize: {
         textAlign: 'center',

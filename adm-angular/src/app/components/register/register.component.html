@@ -1,0 +1,57 @@
+<div class="container">
+    <div *ngIf="!isSuccess" class="columns is-centered" style="margin-top: 10em;">
+        <div class="column is-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">Registre-se</div>
+                </div>
+                <div class="card-content">
+                    <form [formGroup]="formRegister" (ngSubmit)="sendForm()">
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Usuario</label>
+                                <input type="email" class="input" formControlName="username" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Email</label>
+                                <input type="email" class="input" formControlName="email" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Senha</label>
+                                <input type="password" class="input" formControlName="password" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Confirme sua senha</label>
+                                <input type="password" class="input" formControlName="confirmPassword" />
+                            </div>
+                        </div>
+                        <div class="field" style="display: flex; justify-content: center;">
+                            <div class="control">
+                                <button type="submit" class="button is-primary">Registrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isErrorPassword" class="columns is-centered">
+        <div class="column is-4 has-text-centered">
+            <div class="notification is-danger">
+                As senhas não são iguais
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isSuccess" class="columns">
+        <div class="column">
+            <div class="notification is-success">Você foi cadastrado com sucesso. Volte para a área de <a routerLink="/login">Login</a></div>
+        </div>
+    </div>
+
+</div>

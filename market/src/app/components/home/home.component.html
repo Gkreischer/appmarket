@@ -3,7 +3,7 @@
     <div class="hero-head">
         <header class="navbar">
             <div class="container">
-                <div class="navbar-brand">
+                <div *ngIf="marketInfo" class="navbar-brand">
                     <a class="navbar-item">
                         <h1>{{marketInfo.name}}</h1>
                     </a>
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Hero footer: will stick at the bottom -->
-    <div class="hero-foot">
+    <div *ngIf="marketInfo" class="hero-foot">
         <div class="has-text-centered">
             <p><b>Telefone:</b> {{marketInfo.tel}} | <b>Email:</b> {{marketInfo.email}}</p>
         </div>

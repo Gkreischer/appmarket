@@ -8,14 +8,14 @@ import Spinner from './SpinnerComponent';
 class CategorySelected extends Component {
     constructor(props){
         super(props);
-
         this.state = {
             categoryReceived: '',
             productsOfCategory: [],
             error: null,
             isLoading: false
         }
-
+        
+        this._isMounted = false;
         this.loadProductsOfCategory = this.loadProductsOfCategory.bind(this);
 
     }
@@ -24,14 +24,18 @@ class CategorySelected extends Component {
     };
 
     componentDidMount(){
-        this.loadProductsOfCategory();
+        this._isMounted = true;
+        this._isMounted && this.loadProductsOfCategory(this.props.route.params.category);
     }
-    
 
-    loadProductsOfCategory(){
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    async loadProductsOfCategory(category){
         this.setState({ isLoading: true});
-        const categorySelected = this.props.navigation.getParam('category','');
-        fetch(baseUrl + `products?filter[where][category]=${categorySelected}`)
+        if(category !== undefined){
+            await fetch(baseUrl + `products?filter[where][category]=${category}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -40,14 +44,16 @@ class CategorySelected extends Component {
                 }
             })
             .then((data) => 
-            this.setState({ productsOfCategory: data, isLoading: false })
+            {
+                this._isMounted && this.setState({ productsOfCategory: data, isLoading: false })
+            }
             )   
             .catch(errorReceived => this.setState({ error: errorReceived }))
+        }
     }
 
     render() {
         const { navigate } = this.props.navigation;
-        
         if(this.state.isLoading === false){
 
             const renderMenuItem = ({item, index}) => {
@@ -57,7 +63,7 @@ class CategorySelected extends Component {
                             title={item.name}
                             subtitle={item.description.replace(/(\r\n|\n|\r)/gm," ").substr(0, 40)}
                             hideChevron={true}
-                            leftAvatar={{ source: { uri: item.image }}}
+                            leftAvatar={{ source: { uri: item.image }, renderPlaceholderContent: <Spinner />}}
                             onPress={() => navigate('ProductSelected', { productId: item.id})}
                           />
                 );

@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column">
+            <button type="button" (click)="createRandomCode()" class="button is-primary">Gerar código</button>
+        </div>
+        <div *ngIf="randomTicket" class="column">
+            <div class="content">
+                <h3>{{randomTicket}}</h3>
+            </div>
+        </div>
+    </div>
+</div>

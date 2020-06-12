@@ -15,7 +15,11 @@
     ]
   },
   "User": {
-    "dataSource": "MongoDB"
+    "dataSource": "MongoDB",
+    "options": {
+      "realmRequired": true,
+      "realmDelimiter": ":"
+    }
   },
   "AccessToken": {
     "dataSource": "MongoDB",

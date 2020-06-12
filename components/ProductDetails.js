@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { baseUrl } from './shared/baseUrl';
+import Spinner from './SpinnerComponent';
 
 class ProductDetails extends Component { 
     constructor(props){
@@ -22,8 +23,8 @@ class ProductDetails extends Component {
     }; 
 
     componentDidMount(){
-        const productId = this.props.navigation.getParam('productId','');
-        this.loadProductInfo(productId);        
+        // console.log(this.props.route.params.productId);
+        this.loadProductInfo(this.props.route.params.productId);        
     }
 
     loadProductInfo(idReceived) {
@@ -47,8 +48,11 @@ class ProductDetails extends Component {
                 <Card
                     containerStyle={{marginBottom: 15}}
                     image={{uri: this.state.productLoaded.image}}
+                    imageStyle={{
+                        height: 400
+                    }}
                     imageProps={{
-                        containerStyle: {height: 400}
+                        PlaceholderContent: <Spinner />
                     }}
                 > 
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 52, marginBottom: 20}}>

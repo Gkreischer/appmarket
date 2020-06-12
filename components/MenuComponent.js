@@ -16,6 +16,8 @@ class Menu extends Component {
             isLoading: false
         }
 
+        this._isMounted = false;
+
         this.loadCategorys = this.loadCategorys.bind(this);
         this.removeDuplicates = this.removeDuplicates.bind(this);
 
@@ -26,9 +28,13 @@ class Menu extends Component {
     };
 
     componentDidMount() {
-        this.loadCategorys();
+        this._isMounted = true;
+        this._isMounted && this.loadCategorys();
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     removeDuplicates(array, key) {
         let newArray = new Set();
@@ -37,9 +43,9 @@ class Menu extends Component {
 
     }
 
-    loadCategorys() {
-        this.setState({isLoading: true})
-        fetch(baseUrl + 'products')
+    async loadCategorys() {
+        this.setState({ isLoading: true })
+        await fetch(baseUrl + 'products')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -50,13 +56,19 @@ class Menu extends Component {
             .then((data) => {
                 // Remove duplicates of receveid array
                 let arrayWithDuplicateRemoved = this.removeDuplicates(data, 'category');
-                this.setState({ products: arrayWithDuplicateRemoved, isLoading: false });
+                this._isMounted && this.setState({ products: arrayWithDuplicateRemoved, isLoading: false });
             })
             .catch(error => this.setState({ error: error }))
     }
 
     render() {
-        if (this.state.isLoading === false && this.state.products.length !== 0) {
+        if (this.state.products.length === 0) {
+            return (
+                <View style={styles.container}>
+                    <Spinner />
+                </View>
+            );
+        } else {
             const { navigate } = this.props.navigation;
 
             const renderMenuItem = ({ item, index }) => {
@@ -69,6 +81,9 @@ class Menu extends Component {
                         // captionStyle={{ paddingTop: 200, fontSize: 20 }}
                         contentContainerStyle={{ height: 140 }}
                         imageSrc={{ uri: item.image }}
+                        imageProps={{
+                            PlaceholderContent: <Spinner />
+                        }}
                         containerStyle={{ height: 500 }}
                         onPress={() => navigate('CategorySelected', { category: item.category })}
                     >
@@ -93,22 +108,7 @@ class Menu extends Component {
                     />
                 </View>
             );
-        } else {
-            if(this.state.isLoading === true){
-                return(
-                    <View style={styles.container}>
-                        <Spinner />
-                    </View>
-                );
-            } else {
-                if(this.state.products.length === 0){
-                    return (
-                        <View style={styles.container}>
-                            <Text>Você ainda não possui produtos cadastrados</Text>
-                        </View>
-                    );
-                }
-            }
+
         }
     }
 }
