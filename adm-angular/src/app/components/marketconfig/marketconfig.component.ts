@@ -56,7 +56,7 @@ export class MarketconfigComponent implements OnInit {
   mountForm() {
     this.formInfoMarket = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      tel: ['', [Validators.required, Validators.minLength(4)]],
+      tel: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(12)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
       zipcode: ['', [Validators.required, Validators.minLength(4)]],
       district: ['', [Validators.required, Validators.minLength(2)]],
@@ -65,6 +65,10 @@ export class MarketconfigComponent implements OnInit {
       email: ['', [Validators.required, Validators.minLength(10)]],
       logoImg: ['']
     });
+  }
+
+  get formControl(){
+    return this.formInfoMarket.controls;
   }
 
   sendForm() {

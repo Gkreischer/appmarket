@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Button, YellowBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +13,9 @@ import ContactComponent from './components/ContactComponent';
 
 enableScreens();
 
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -30,9 +33,18 @@ function HomeScreen({ route, navigation }) {
             backgroundColor: '#3663e1',
           },
           headerTintColor: '#fff',
+          headerLeftContainerStyle: {
+            marginLeft: 10
+          },
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+          headerLeft: () => (
+            <Button
+              onPress={() => navigation.toggleDrawer()}
+              title="Menu"
+            />
+          ),
         }}
       />
       <Stack.Screen
@@ -79,12 +91,25 @@ function ContactScreen({ route, navigation }) {
         options={{
           title: 'Contato',
           headerStyle: {
-            backgroundColor: '#3663e1',
+            backgroundColor: '#3663e1'
           },
           headerTintColor: '#fff',
+          headerLeftContainerStyle: {
+            marginLeft: 10
+          },
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+          headerLeft: (props) => (
+            <Button
+            {...props}
+              onPress={() => navigation.toggleDrawer()}
+              title="Menu"
+              style={{
+                marginLeft: 10
+              }}
+            />
+          )
         }}
       />
     </Stack.Navigator>

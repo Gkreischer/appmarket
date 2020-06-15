@@ -5,17 +5,27 @@
             <div class="field">
                 <label>Nome</label>
                 <div class="control">
-                    <input type="text" class="input" formControlName="name" />
+                    <input type="text" class="input" [class.is-danger]="formControl.name.invalid && (formControl.name.dirty || formControl.name.touched)" formControlName="name" required/>
+                    <div *ngIf="formControl.name.invalid && (formControl.name.dirty || formControl.name.touched)">
+                        <div *ngIf="formControl.name.errors.required">
+                          <small class="has-text-danger">Insira um nome</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label>Categoria</label>
                 <div class="control">
                     <div class="select">
-                        <select formControlName="category">
+                        <select formControlName="category" [class.is-danger]="formControl.name.invalid && (formControl.name.dirty || formControl.name.touched)">
                             <option value="">Selecione uma categoria</option>
                             <option *ngFor="let category of categories" value={{category.category}}>{{category.category}}</option>
                         </select>
+                        <div *ngIf="formControl.category.invalid && (formControl.category.dirty || formControl.category.touched)">
+                            <div *ngIf="formControl.category.errors.required">
+                              <small class="has-text-danger">Selecione uma categoria</small>
+                            </div>
+                        </div>
                     </div>
                     <button type="button" (click)="toggleModal()" class="button is-link"
                         style="margin-left: 0.5em;">Adicionar</button>
@@ -24,19 +34,29 @@
             <div class="field">
                 <label>Preço</label>
                 <div class="control">
-                    <input type="number" class="input" formControlName="price" />
+                    <input type="number" class="input" [class.is-danger]="formControl.price.invalid && (formControl.price.dirty || formControl.price.touched)" formControlName="price" required/>
+                    <div *ngIf="formControl.price.invalid && (formControl.price.dirty || formControl.price.touched)">
+                        <div *ngIf="formControl.price.errors.required">
+                          <small class="has-text-danger">Insira um preço</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label>Marca</label>
                 <div class="control">
-                    <input type="text" class="input" formControlName="brand" />
+                    <input type="text" class="input" [class.is-danger]="formControl.brand.invalid && (formControl.brand.dirty || formControl.brand.touched)" formControlName="brand" />
+                    <div *ngIf="formControl.brand.invalid && (formControl.brand.dirty || formControl.brand.touched)">
+                        <div *ngIf="formControl.name.errors.required">
+                          <small class="has-text-danger">Insira o nome da marca</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Descrição</label>
                 <div class="control">
-                    <textarea class="textarea" rows="5" formControlName="description"></textarea>
+                    <textarea class="textarea" rows="5" formControlName="description" placeholder="É sempre bom inserir uma descrição no seu produto... só um lembrete. =)"></textarea>
                 </div>
             </div>
             <div class="field">
@@ -59,7 +79,7 @@
             </div>
             <div class="field is-grouped">
                 <div class="control">
-                    <button type="button" (click)="updateProductAndGoBackRoute($event)" id={{this.selectedId}}
+                    <button type="button" (click)="updateProductAndGoBackRoute($event)" id="{{this.selectedId}}"
                         *ngIf="this.selectedId !== null" class="button is-link">Atualizar</button>
                 </div>
                 <div class="control">

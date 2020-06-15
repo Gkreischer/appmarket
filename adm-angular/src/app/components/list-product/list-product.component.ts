@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Product } from 'src/app/shared/product';
 import { ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list-product',
@@ -12,8 +13,9 @@ import { Router } from '@angular/router';
 })
 export class ListProductComponent implements OnInit, OnDestroy {
 
-  constructor(private crud: CrudService, private router: Router) { }
+  constructor(private crud: CrudService, private router: Router, private fb: FormBuilder) { }
 
+  product: Product;
   products: Product[] = [];
   isSuccess?: boolean = false;
   isError?: boolean = false;
@@ -21,12 +23,58 @@ export class ListProductComponent implements OnInit, OnDestroy {
   p: number = 1;
   destroy: ReplaySubject<boolean> = new ReplaySubject(1);
 
+  formVisibility: FormGroup;
+
   ngOnInit(): void {
     this.getProducts();
+    this.mountForm();
+  }
+
+  mountForm(){
+    this.formVisibility = this.fb.group({
+      isShow: false
+    });
   }
 
   getUserToEditProduct(id: string){
     this.router.navigate(['home/addProduto', id]);
+  }
+
+  changeVisibility(event){
+    let target = event.target || event.srcElement || event.currentTarget;
+    let id = target.attributes.id.value;
+    let isChecked = !target.checked;
+
+    let confirm = window.confirm('Você deseja alterar a visibilidade do produto na sua loja?');
+    
+    if(confirm){
+      if(isChecked === true){
+        this.formVisibility.get('isShow').patchValue(false);
+      }  else {
+        if(isChecked === false){
+          this.formVisibility.get('isShow').patchValue(true);
+        }
+
+      }
+      
+      let checkboxIsMarked = this.formVisibility.value;
+      this.sendForm(checkboxIsMarked, id);
+    } else {
+      return;
+    }
+  }
+
+  sendForm(checkboxIsMarked: boolean, id: string){
+
+    this.crud.updateData(id, checkboxIsMarked, '/products').subscribe((response) => {
+      this.isSuccess = true;
+      this.isError = false;
+    }, error => {
+      console.log(error);
+      this.isError = true;
+      this.isSuccess = false;
+      this.errorMessage = error;
+    })
   }
 
   getInfoOfSelectProduct(event){

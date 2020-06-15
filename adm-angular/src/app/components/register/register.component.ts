@@ -17,16 +17,17 @@ export class RegisterComponent implements OnInit {
   isErrorPassword: boolean = false;
   isError: boolean = false;
   isSuccess: boolean = false;
+  errorMessage: string;
   ngOnInit(): void {
     this.mountForm();
   }
 
   mountForm() {
     this.formRegister = this.fb.group({
-      username: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(50) ]],
-      email: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(50) ]],
-      password: ['', [ Validators.required, Validators.minLength(6), Validators.maxLength(18) ]],
-      confirmPassword: ['', [ Validators.required, Validators.minLength(6), Validators.maxLength(18) ]],
+      username: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(18)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(18)]],
       realm: ['client']
     });
   }
@@ -36,11 +37,11 @@ export class RegisterComponent implements OnInit {
     let passwordOne = this.formRegister.get('password').value;
     let passwordTwo = this.formRegister.get('confirmPassword').value;
 
-    if(passwordOne === passwordTwo){
+    if (passwordOne === passwordTwo) {
       this.isErrorPassword = false;
-      
+
       this.registerData = this.formRegister.value;
-      
+
       this.crud.addData(this.registerData, '/Users').subscribe((response) => {
         console.log(response);
         this.isError = false;
@@ -49,13 +50,16 @@ export class RegisterComponent implements OnInit {
       }, error => {
         this.isError = true;
         this.isSuccess = false;
+        this.errorMessage = error;
       })
 
     } else {
       alert('As senhas não são iguais');
       this.isErrorPassword = true;
     }
+  }
 
-    
+  backToLoginMenu() {
+    this.router.navigate(['/login']);
   }
 }

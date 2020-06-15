@@ -8,6 +8,7 @@ import { InfoComponent } from './components/info/info.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { MarketconfigComponent } from './components/marketconfig/marketconfig.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
         component: MarketconfigComponent
       }
     ]
+  },
+  {
+    path: 'register', component: RegisterComponent
   },
   {
     path: '', redirectTo: '/login', pathMatch: 'full'

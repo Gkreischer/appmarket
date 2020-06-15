@@ -1,53 +1,110 @@
 <div class="columns">
     <div class="column is-6">
         <h3 class="is-size-5">Dados da sua loja</h3>
-        <form [formGroup]="formInfoMarket" (ngSubmit)="sendForm()">
+        <form ngNativeValidate [formGroup]="formInfoMarket" (ngSubmit)="sendForm()">
             <div class="field">
                 <label class="label">Nome da loja</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="name">
+                    <input class="input" type="text" formControlName="name" required minlength="2"
+                        [class.is-danger]="formControl.name.invalid && (formControl.name.dirty || formControl.name.touched)">
+                    <div *ngIf="formControl.name.invalid && (formControl.name.dirty || formControl.name.touched)">
+                        <div *ngIf="formControl.name.errors.required">
+                            <small class="has-text-danger">Insira um nome para a loja</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="email">
+                    <input class="input" type="email" formControlName="email" required minlength="10"
+                        [class.is-danger]="formControl.email.invalid && (formControl.email.dirty || formControl.email.touched)">
+                </div>
+                <div *ngIf="formControl.email.invalid && (formControl.email.dirty || formControl.email.touched)">
+                    <div *ngIf="formControl.email.errors.required">
+                        <small class="has-text-danger">Insira um email</small>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Telefone</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="tel">
+                    <input class="input" type="text" formControlName="tel" required minlength="11" maxlength="12"
+                        [class.is-danger]="formControl.tel.invalid && (formControl.tel.dirty || formControl.tel.touched)">
+                    <div *ngIf="formControl.tel.invalid && (formControl.tel.dirty || formControl.tel.touched)">
+                        <div *ngIf="formControl.tel.errors.required">
+                            <small class="has-text-danger">Insira um telefone (0 + DDD + telefone)</small>
+                        </div>
+                        <div *ngIf="formControl.tel.errors.minlength">
+                            <small class="has-text-danger">No mínimo 11 números</small>
+                        </div>
+                        <div *ngIf="formControl.tel.errors.maxlength">
+                            <small class="has-text-danger">No máximo 12 números</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Endereço</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="address">
+                    <input class="input" type="text" formControlName="address" required minlength="5"
+                        [class.is-danger]="formControl.address.invalid && (formControl.address.dirty || formControl.address.touched)">
+                    <div
+                        *ngIf="formControl.address.invalid && (formControl.address.dirty || formControl.address.touched)">
+                        <div *ngIf="formControl.address.errors.required">
+                            <small class="has-text-danger">Insira um endereço com número</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Bairro</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="district">
+                    <input class="input" type="text" formControlName="district" required minlength="2"
+                        [class.is-danger]="formControl.district.invalid && (formControl.district.dirty || formControl.district.touched)">
+                    <div
+                        *ngIf="formControl.district.invalid && (formControl.district.dirty || formControl.district.touched)">
+                        <div *ngIf="formControl.district.errors.required">
+                            <small class="has-text-danger">Insira um bairro</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">CEP</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="zipcode">
+                    <input class="input" type="text" formControlName="zipcode" required minlength="4"
+                        [class.is-danger]="formControl.zipcode.invalid && (formControl.zipcode.dirty || formControl.zipcode.touched)">
+                </div>
+                <div *ngIf="formControl.zipcode.invalid && (formControl.zipcode.dirty || formControl.zipcode.touched)">
+                    <div *ngIf="formControl.zipcode.errors.required">
+                        <small class="has-text-danger">Insira um CEP (XXXXX-XX)</small>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">Cidade</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="city">
+                    <input class="input" type="text" formControlName="city" required minlength="2"
+                        [class.is-danger]="formControl.city.invalid && (formControl.city.dirty || formControl.city.touched)">
+                    <div *ngIf="formControl.city.invalid && (formControl.city.dirty || formControl.city.touched)">
+                        <div *ngIf="formControl.city.errors.required">
+                            <small class="has-text-danger">Insira uma cidade</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
                 <label class="label">País</label>
                 <div class="control">
-                    <input class="input" type="text" formControlName="country">
+                    <input class="input" type="text" formControlName="country" required minlength="2"
+                        [class.is-danger]="formControl.country.invalid && (formControl.country.dirty || formControl.country.touched)">
+                    <div
+                        *ngIf="formControl.country.invalid && (formControl.country.dirty || formControl.country.touched)">
+                        <div *ngIf="formControl.country.errors.required">
+                            <small class="has-text-danger">Insira seu País</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field">
@@ -71,7 +128,8 @@
             <div class="field">
                 <div class="control">
                     <button *ngIf="!isMarketInfo" type="submit" class="button is-primary">Salvar</button>
-                    <button *ngIf="isMarketInfo" (click)="updateMarketInfo()" type="button" class="button is-primary">Atualizar</button>
+                    <button *ngIf="isMarketInfo" (click)="updateMarketInfo()" type="button"
+                        class="button is-primary">Atualizar</button>
                 </div>
             </div>
         </form>

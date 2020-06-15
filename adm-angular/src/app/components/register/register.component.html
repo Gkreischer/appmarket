@@ -31,12 +31,20 @@
                                 <input type="password" class="input" formControlName="confirmPassword" />
                             </div>
                         </div>
-                        <div class="field" style="display: flex; justify-content: center;">
+                        <div class="field" *ngIf="!isError" style="display: flex; justify-content: center;">
                             <div class="control">
                                 <button type="submit" class="button is-primary">Registrar</button>
                             </div>
                         </div>
+                        <div class="field" *ngIf="isError" style="display: flex; justify-content: center;">
+                            <div class="control">
+                                <button type="button" (click)="backToLoginMenu()" class="button is-warning">Voltar</button>
+                            </div>
+                        </div>
                     </form>
+                </div>
+                <div *ngIf="!isError" class="card-footer" style="display: flex; justify-content: center;">
+                    <a routerLink="/login">Voltar</a>
                 </div>
             </div>
         </div>
@@ -45,6 +53,13 @@
         <div class="column is-4 has-text-centered">
             <div class="notification is-danger">
                 As senhas não são iguais
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isError" class="columns is-centered">
+        <div class="column is-4 has-text-centered">
+            <div class="notification is-danger">
+                Esse nome ou email não estão disponíveis. Você já tentou se cadastrar?
             </div>
         </div>
     </div>

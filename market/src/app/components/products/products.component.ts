@@ -19,17 +19,18 @@ export class ProductsComponent implements OnInit {
   errorMessage: string = '';
   products: Product[] = [];
   categories: Category[] = [];
-  produtsOfCategorySelected: Product = undefined;
+  productsOfCategorySelected: Product[] = [];
   productSelectedDetails: Product = undefined;
   p: number = 1;
   isModalOpen: boolean = false;
+  isCategoryEmpty: boolean = false;
   ngOnInit(): void {
     this.getProducts();
     this.getCategories();
   }
 
   getProducts() {
-    this.crud.getData('/products').pipe(takeUntil(this.destroy)).subscribe((productsReceived) => {
+    this.crud.getData('/products?filter[where][isShow]=true').pipe(takeUntil(this.destroy)).subscribe((productsReceived) => {
       this.products = productsReceived;
       this.products.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -55,11 +56,16 @@ export class ProductsComponent implements OnInit {
 
   showProductsCategory(event) {
     let target = event.target || event.srcElement || event.currentTarget;
-    let id = target.attributes.id.value;
+    let categoryValue = target.attributes.id.value;
 
-    this.crud.getSpecificData('/products', 'category', id).subscribe((productsReceived) => {
-      console.log(productsReceived);
-      this.produtsOfCategorySelected = productsReceived;
+    this.crud.getSpecificDataWithTwoOptions('/products', 'category', 'isShow', categoryValue, "true").subscribe((productsReceived) => {
+
+      this.productsOfCategorySelected = productsReceived;
+      if(this.productsOfCategorySelected.length === 0){
+        this.isCategoryEmpty = true;
+      } else {
+        this.isCategoryEmpty = false;
+      }
     }, error => {
       console.log(error);
       console.log('Erro ao selecionar a categoria');

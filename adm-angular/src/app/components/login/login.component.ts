@@ -14,10 +14,11 @@ export class LoginComponent implements OnInit {
 
   formLogin: FormGroup;
   userData: User;
-
+  response: User;
   isError: boolean = false;
   isSuccess: boolean = false;
   errorMessage: string = undefined;
+  responseServer: User;
   ngOnInit(): void {
     this.mountForm();
   }
@@ -30,18 +31,14 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  verifyIfUserIsAdmin(username: string) {
+  verifyUserAndAddTypeOnLoginData(username: string) {
     if(username.length !== 0){
       
       let isAdmin = username.substr(0,6);
       console.log(isAdmin);
       if(isAdmin !== 'admin:'){
-        console.log('Aqui 1')
-        this.formLogin.get('realm').setValue('client');
         return this.formLogin.get('email').setValue(`client:${username}`);
       }else {
-        console.log('Aqui 2');
-        this.formLogin.get('realm').setValue('admin');
         return this.formLogin.get('email').setValue(`${username}`);
       }
     }
@@ -51,16 +48,15 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
     
     let email = this.formLogin.get('email').value;
-    console.log(email);
     
-    this.verifyIfUserIsAdmin(email);
-    console.log(this.formLogin.get('email').value);
+    this.verifyUserAndAddTypeOnLoginData(email);
 
     this.userData = this.formLogin.value;
 
     this.login.login('Users/login?include=user', this.userData).subscribe((response) => {
-      console.log(response);
-      
+      if(response.user.realm === 'client'){
+        return this.router.navigate(['/clientHome'])
+      } 
       this.isError = false;
       this.isSuccess = true;
       this.setTokenOnLocalStorage(response);

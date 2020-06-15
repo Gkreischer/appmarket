@@ -35,7 +35,7 @@ class CategorySelected extends Component {
     async loadProductsOfCategory(category){
         this.setState({ isLoading: true});
         if(category !== undefined){
-            await fetch(baseUrl + `products?filter[where][category]=${category}`)
+            await fetch(baseUrl + `products?filter[where][category]=${category}&filter[where][isShow]=true`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -55,7 +55,6 @@ class CategorySelected extends Component {
     render() {
         const { navigate } = this.props.navigation;
         if(this.state.isLoading === false){
-
             const renderMenuItem = ({item, index}) => {
                 return (
                         <ListItem

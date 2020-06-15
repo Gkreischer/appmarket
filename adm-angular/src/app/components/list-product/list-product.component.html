@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
+                        <th scope="col">Visível</th>
                         <th scope="col">Valor</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Ações</th>
@@ -19,6 +20,19 @@
                 <tbody>
                     <tr *ngFor="let product of products | paginate: { itemsPerPage: 10, currentPage: p }; let i = index ">
                         <td>{{product.name}}</td>
+                        <td>
+                            <form [formGroup]="formVisibility">
+                                <div class="field">
+                                    <div class="control">
+                                      <label class="checkbox">
+                                        <form [formGroup]="formVisibility" >
+                                            <input id="{{product.id}}" type="checkbox" value="{{product.isShow}}" (change)="changeVisibility($event)" [checked]="product.isShow"/>
+                                        </form>
+                                      </label>
+                                    </div>
+                                  </div>
+                            </form>
+                        </td>
                         <td>{{product.price}}</td>
                         <td>{{product.category}}</td>
                         <td style="width: 148px">

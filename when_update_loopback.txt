@@ -1,0 +1,5 @@
+Quando atualizar o loopback do AppMarket:
+
+1 - Verificar se HTTP ou HTTPS está ativado
+2 -  Verificar se o domínio do Certificado está correto
+3 - Verificar se o domínio em config.json está correto

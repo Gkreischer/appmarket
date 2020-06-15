@@ -14,6 +14,7 @@ const sslConfig = require('./ssl-config');
 
 const app = module.exports = loopback();
 
+// Change for development
 const SSL = false;
 
 if (SSL) {

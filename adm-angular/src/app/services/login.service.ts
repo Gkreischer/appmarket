@@ -17,7 +17,7 @@ export class LoginService {
   login(route: string, data) {
     const url = `${baseUrl}/${route}`;
 
-    return this.http.post(url, data).pipe(
+    return this.http.post<any>(url, data).pipe(
       tap(_ => console.log(`Logging in`)),
       catchError(this.handleError)
     );

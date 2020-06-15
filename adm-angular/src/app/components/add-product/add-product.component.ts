@@ -60,17 +60,22 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   mountForm() {
     this.formProduct = this.fb.group({
-      name: [''],
-      category: [''],
-      price: [''],
-      brand: [''],
+      name: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+      brand: ['', [Validators.required]],
       description: [''],
-      image: ''
+      image: ['', [Validators.minLength]],
+      isShow: false
     });
 
     this.formCategory = this.fb.group({
       category: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]]
     });
+  }
+
+  get formControl() {
+    return this.formProduct.controls;
   }
 
   loadCategories() {

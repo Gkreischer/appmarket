@@ -30,6 +30,14 @@ export class CrudService {
     );
   }
 
+  getSpecificDataWithTwoOptions(route: string, property1: string, property2: string , value1: string, value2: string): Observable<any> {
+    return this.http.get<any>(`${baseUrl + route}?filter[where][${property1}]=${value1}&filter[where][${property2}]=${value2}`)
+    .pipe(
+      tap(data => console.log('fetched specific data from server')),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

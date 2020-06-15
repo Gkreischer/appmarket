@@ -1,1 +1,3 @@
-export const baseUrl = 'http://192.168.0.20:3001/api';
+import defaultUrl from './../../../../baseUrl.js';
+
+export const baseUrl = defaultUrl;

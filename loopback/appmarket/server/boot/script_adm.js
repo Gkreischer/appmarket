@@ -6,7 +6,7 @@ module.exports = function(app) {
 
         if (!users) {
             User.create([
-                {username: 'admin@email.com', email: 'admin@email.com', password: 'password'}
+                {username: 'admin@email.com', email: 'admin@email.com', password: 'password', realm: 'admin'}
             ], (err, users) => {
                 if (err) throw(err);
                 
