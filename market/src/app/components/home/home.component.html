@@ -38,8 +38,12 @@
 
     <!-- Hero footer: will stick at the bottom -->
     <div *ngIf="marketInfo" class="hero-foot">
-        <div class="has-text-centered">
-            <p><b>Telefone:</b> {{marketInfo.tel}} | <b>Email:</b> {{marketInfo.email}}</p>
+        <div>
+            <div style="display:flex; flex: 1; justify-content: center;">
+                <a href="tel:{{marketInfo.tel}}"><p class="has-text-white">Telefone: ({{marketInfo.tel.substr(0,2)}}){{marketInfo.tel.substr(3,12)}}</p></a>
+                <p>&nbsp; | &nbsp;</p>
+                <a href="email:{{marketInfo.email}}"><p class="has-text-white">{{marketInfo.email}}</p></a>
+            </div>
         </div>
     </div>
 </section>

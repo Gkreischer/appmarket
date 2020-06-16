@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.11">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Gustavo"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2020-06-15 04:15:31 "/>
+        <attribute name="created" value="R3VzdGF2bztERVNLVE9QLTVROTExQUI7MjAyMC0wNi0xNTsiMDM6MDU6MzMgIjsyOTMz"/>
+        <attribute name="edited" value="R3VzdGF2bztERVNLVE9QLTVROTExQUI7MjAyMC0wNi0xNTsiMDQ6MTU6MzEgIjs2OzMwNDY="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="Primeiro, escolher o produto e pegar seu pre&#231;o e ID"/>
+            <declare name="productPrice, productId" type="Real" array="False" size=""/>
+            <assign variable="productId" expression="Random(999)"/>
+            <input variable="productPrice"/>
+            <if expression="productPrice &gt; 0">
+                <then>
+                    <comment text="Agora, vamos pegar o valor do desconto e calcular o valor total do produto com o ticket"/>
+                    <declare name="descountValue" type="Integer" array="False" size=""/>
+                    <input variable="descountValue"/>
+                    <declare name="totalValueWithTicket" type="Real" array="False" size=""/>
+                    <assign variable="totalValueWithTicket" expression="productprice - ((productprice/100)*descountValue)"/>
+                    <output expression="&quot;O valor total com desconto &#233;: &quot; &amp;totalValueWithTicket" newline="True"/>
+                    <declare name="confirmValue" type="Boolean" array="False" size=""/>
+                    <input variable="confirmValue"/>
+                    <comment text="Confirma se valor &#233; o correto"/>
+                    <if expression="confirmValue == true">
+                        <then>
+                            <comment text="Ele gerar&#225; o ticket com o valor original do produto, o valor do desconto e o valor total com desconto."/>
+                            <call expression="geraTicket(productPrice, descountValue, totalValueWithTicket)"/>
+                            <declare name="ticket" type="Integer" array="False" size=""/>
+                            <output expression="&quot;Insira o n&#250;mero do ticket criado&quot;" newline="True"/>
+                            <input variable="ticket"/>
+                            <comment text="Pedir pra confirmar com a ID do ticket gerado"/>
+                            <if expression="ticket &gt; 0">
+                                <then>
+                                    <declare name="clientId" type="String" array="False" size=""/>
+                                    <input variable="clientId"/>
+                                    <if expression="Len(clientId) != 0">
+                                        <then>
+                                            <output expression="&quot;Cliente, sua id &#233;:&quot;&amp;clientId" newline="True"/>
+                                            <output expression="&quot;Seu ticket &#233;:&quot; &amp;ticket" newline="True"/>
+                                            <output expression="&quot;Voc&#234; receber&#225; o produto:&quot; &amp;productId" newline="True"/>
+                                            <output expression="&quot;Com o valor de:&quot; &amp;totalValueWithTicket" newline="True"/>
+                                            <comment text="O cliente ter&#225; acesso ao ID do ticket e poder&#225; usar para desconto."/>
+                                        </then>
+                                        <else>
+                                            <output expression="&quot;Voc&#234; precisa fornecer um cliente&quot;" newline="True"/>
+                                        </else>
+                                    </if>
+                                </then>
+                                <else/>
+                            </if>
+                        </then>
+                        <else/>
+                    </if>
+                </then>
+                <else/>
+            </if>
+        </body>
+    </function>
+    <function name="geraTicket" type="Integer" variable="ticket">
+        <parameters>
+            <parameter name="productIdPrice" type="Integer" array="False"/>
+            <parameter name="descountValue" type="Integer" array="False"/>
+            <parameter name="totalValueWithTicket" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="ticket" type="Integer" array="False" size=""/>
+            <if expression="totalValueWithTicket &gt; 0">
+                <then>
+                    <assign variable="ticket" expression="Random(99)"/>
+                    <output expression="&quot;Seu ticket &#233;:&quot; &amp;ticket" newline="True"/>
+                </then>
+                <else>
+                    <breakpoint/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>

@@ -24,6 +24,7 @@ export class ProductsComponent implements OnInit {
   p: number = 1;
   isModalOpen: boolean = false;
   isCategoryEmpty: boolean = false;
+  isCategoryClicked: boolean = false;
   ngOnInit(): void {
     this.getProducts();
     this.getCategories();
@@ -57,7 +58,7 @@ export class ProductsComponent implements OnInit {
   showProductsCategory(event) {
     let target = event.target || event.srcElement || event.currentTarget;
     let categoryValue = target.attributes.id.value;
-
+    this.isCategoryClicked = true;
     this.crud.getSpecificDataWithTwoOptions('/products', 'category', 'isShow', categoryValue, "true").subscribe((productsReceived) => {
 
       this.productsOfCategorySelected = productsReceived;

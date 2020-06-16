@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
     if (passwordOne === passwordTwo) {
       this.isErrorPassword = false;
-
+      this.formRegister.get('confirmPassword').setValue('confirmed');
       this.registerData = this.formRegister.value;
 
       this.crud.addData(this.registerData, '/Users').subscribe((response) => {

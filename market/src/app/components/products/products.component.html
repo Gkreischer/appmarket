@@ -27,7 +27,67 @@
         </div>
     </div>
 </div>
-<div *ngIf="products.length !== 0" class="columns">
+<div class="columns">
+    <div class="column is-2">
+        <div class="box">
+            <aside class="menu">
+                <p class="menu-label">
+                  Categorias
+                </p>
+                <ul class="menu-list">
+                  <li *ngFor="let category of categories" id="{{category.category}}">
+                      <button class="button is-white" id="{{category.category}}" (click)="showProductsCategory($event)">{{category.category}}</button>
+                    </li>
+                </ul>
+              </aside>
+        </div>
+    </div>
+    <div *ngIf="isCategoryClicked" class="column">
+        <div class="card">
+            <div class="card-header">
+                <p class="card-header-title">Produtos desta categoria</p>
+            </div>
+            <div class="card-content">
+                <div class="container">
+                    <div class="columns is-multiline">
+                        <div *ngIf="!isCategoryEmpty" class="column">
+                            <article *ngFor="let product of productsOfCategorySelected; let i = index"  class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img class="is-rounded" src="{{product.image}}" alt="Placeholder of Image">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>{{product.name}}</strong>
+                                            <br>
+                                            {{product.brand}}
+                                            <br>
+                                            <strong>R${{product.price}}</strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="media-right">
+                                    <button id="{{product.id}}" style="margin-top: 1em;" (click)="toggleModal($event)" type="button" class="button is-primary">
+                                        Ver
+                                    </button>
+                                  </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div *ngIf="isCategoryEmpty" class="column">
+                        <div  class="content">
+                            <p>Nenhum produto cadastrado nessa categoria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Tiles -->
+<!-- <div *ngIf="products.length !== 0" class="columns">
     <div class="column">
         <div class="tile is-ancestor">
             <div class="tile is-vertical is-6">
@@ -91,7 +151,8 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+<!-- End tiles -->
 <!-- Modal -->
 <div *ngIf="productSelectedDetails" class="modal" [class.is-active]="isModalOpen">
     <div class="modal-background"></div>
