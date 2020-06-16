@@ -28,3 +28,9 @@
      margin: 0 auto;
      margin-top: -3.5%;
  }
+
+aside {
+    .button.is-fullwidth {
+        justify-content: flex-start;
+    }
+}

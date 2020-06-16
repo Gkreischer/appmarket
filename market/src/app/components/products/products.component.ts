@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CrudService } from './../../services/crud.service';
 import { ReplaySubject, } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { Category } from 'src/app/shared/category';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(private crud: CrudService) { }
 
@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit {
   isModalOpen: boolean = false;
   isCategoryEmpty: boolean = false;
   isCategoryClicked: boolean = false;
+
   ngOnInit(): void {
     this.getProducts();
     this.getCategories();
@@ -60,7 +61,6 @@ export class ProductsComponent implements OnInit {
     let categoryValue = target.attributes.id.value;
     this.isCategoryClicked = true;
     this.crud.getSpecificDataWithTwoOptions('/products', 'category', 'isShow', categoryValue, "true").subscribe((productsReceived) => {
-
       this.productsOfCategorySelected = productsReceived;
       if(this.productsOfCategorySelected.length === 0){
         this.isCategoryEmpty = true;
@@ -92,6 +92,11 @@ export class ProductsComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  ngOnDestroy(){
+    this.destroy.next(true);
+    this.destroy.complete();
   }
 
 }

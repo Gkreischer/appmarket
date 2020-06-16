@@ -28,7 +28,7 @@
     </div>
 </div>
 <div class="columns">
-    <div class="column is-2">
+    <div class="column is-3">
         <div class="box">
             <aside class="menu">
                 <p class="menu-label">
@@ -36,7 +36,7 @@
                 </p>
                 <ul class="menu-list">
                   <li *ngFor="let category of categories" id="{{category.category}}">
-                      <button class="button is-white" id="{{category.category}}" (click)="showProductsCategory($event)">{{category.category}}</button>
+                      <button class="button is-white is-fullwidth" id="{{category.category}}" (click)="showProductsCategory($event)">{{category.category}}</button>
                     </li>
                 </ul>
               </aside>

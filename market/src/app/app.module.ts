@@ -8,6 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ProductsComponent } from './components/products/products.component';
 import { HttpClientModule } from '@angular/common/http';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule,
     NgxUiLoaderRouterModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
